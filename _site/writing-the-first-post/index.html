@@ -9,28 +9,32 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>sendol's CS & Dev. Blog</title>
-<meta name="description" content=".">
+<!-- begin _includes/seo.html --><title>Writing The First Post - sendol&#8217;s CS &amp; Dev. Blog</title>
+<meta name="description" content="">
 
 
   <meta name="author" content="Your Name">
   
+  <meta property="article:author" content="Your Name">
+  
 
 
-<meta property="og:type" content="website">
+<meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="sendol's CS & Dev. Blog">
-<meta property="og:title" content="sendol’s CS &amp; Dev. Blog">
-<meta property="og:url" content="http://localhost:4000/csblog/">
+<meta property="og:title" content="Writing The First Post">
+<meta property="og:url" content="http://localhost:4000/csblog/writing-the-first-post/">
 
 
-  <meta property="og:description" content=".">
-
-
-
+  <meta property="og:description" content="">
 
 
 
+
+
+
+
+  <meta property="article:published_time" content="2023-10-19T00:00:00+09:00">
 
 
 
@@ -41,7 +45,7 @@
   
 
 
-<link rel="canonical" href="http://localhost:4000/csblog/">
+<link rel="canonical" href="http://localhost:4000/csblog/writing-the-first-post/">
 
 
 
@@ -92,7 +96,7 @@
 
   </head>
 
-  <body class="layout--home">
+  <body class="layout--single">
     <nav class="skip-links">
   <ul>
     <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
@@ -136,6 +140,8 @@
 
     <div class="initial-content">
       
+
+
 
 
 
@@ -261,33 +267,20 @@ South Korea</span>
 
 
 
-  <div class="archive">
-    
-      <h1 id="page-title" class="page__title"></h1>
-    
-    
-
-<h3 class="archive__subtitle">Recent posts</h3>
-
-
-
-
-<div class="entries-list">
-  
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Writing The First Post">
+    <meta itemprop="description" content="">
+    <meta itemprop="datePublished" content="2023-10-19T00:00:00+09:00">
     
 
-
-
-<div class="list__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <div class="page__inner-wrap">
       
-        <a href="/csblog/writing-the-first-post/" rel="permalink">Writing The First Post
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/csblog/writing-the-first-post/" class="u-url" itemprop="url">Writing The First Post
 </a>
-      
-    </h2>
-    
+          </h1>
+          
 
   <p class="page__meta">
     
@@ -315,19 +308,107 @@ South Korea</span>
   </p>
 
 
-    <p class="archive__item-excerpt" itemprop="description">
-</p>
-  </article>
-</div>
+        </header>
+      
 
+      <section class="page__content e-content" itemprop="text">
+        
+        
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// cpp</span>
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Hello, world!"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># python
+</span><span class="k">print</span><span class="p">(</span><span class="s">"Hello, world!"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Rust</span>
+<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">io</span><span class="p">;</span>
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"Hello, world!"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="to-do-list">To-Do List</h2>
+
+<ol>
+  <li>✅ 블로그에 글 하나 올리기</li>
+  <li>✅ 블로그 메인 화면 및 사이드바 등에 개인정보 채워두기 (닉네임, 깃헙 링크 등등)</li>
+  <li>⬜ 제대로 된 자기소개 페이지 하나 만들기</li>
+  <li>✅ 블로그 맨 위에 메뉴 바 만들기</li>
+  <li>✅ 블로그 포스트 검색 기능 만들기</li>
+  <li>⬜ 해시태그 기능 추가하기</li>
+  <li>❔ 블로그 포스트 연도별 / 카테고리 별 뷰 만들기</li>
+  <li>⬜ 블로그에 HTML로 포스트 올리기</li>
+  <li>⬜ Javascript 관련 기능 어떻게 쓰는지 알아보기</li>
+</ol>
+
+<h2 id="tips--troubleshooting">Tips &amp; Troubleshooting</h2>
+
+<ol>
+  <li>Mardown 파일에 포스트 제목을 따로 쓸 필요는 없다. 굳이 쓰면 이렇게 제목이 두 번 표시된다.</li>
+</ol>
+
+<figure style="">
+    <img src="/assets/images/writing-the-first-post/image.png" alt="Screenshot of blog post upper part wtih duplicated title" style="border: 5px solid #555; width: 80%; text-align: center" />
+    <figcaption>이미지에 테두리 넣는 법도 배웠다?</figcaption>
+</figure>
+
+<ol>
+  <li></li>
+</ol>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2023-10-19T00:00:00+09:00">October 19, 2023</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Writing+The+First+Post%20http%3A%2F%2Flocalhost%3A4000%2Fcsblog%2Fwriting-the-first-post%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fcsblog%2Fwriting-the-first-post%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fcsblog%2Fwriting-the-first-post%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You may also enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+            
+      </div>
+    </div>
   
 </div>
 
-
-
-
-  </div>
-</div>
     </div>
 
     

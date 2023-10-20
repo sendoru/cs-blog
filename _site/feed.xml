@@ -1,1 +1,47 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-09-19T19:34:35+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Site Title</title><subtitle>An amazing website.</subtitle><author><name>Your Name</name></author></feed>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/csblog/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/csblog/" rel="alternate" type="text/html" /><updated>2023-10-20T16:15:07+09:00</updated><id>http://localhost:4000/csblog/feed.xml</id><title type="html">sendol’s CS &amp;amp; Dev. Blog</title><subtitle>.</subtitle><author><name>Your Name</name><email>sendol39@gmail.com</email></author><entry><title type="html">Writing The First Post</title><link href="http://localhost:4000/csblog/writing-the-first-post/" rel="alternate" type="text/html" title="Writing The First Post" /><published>2023-10-19T00:00:00+09:00</published><updated>2023-10-19T00:00:00+09:00</updated><id>http://localhost:4000/csblog/writing-the-first-post</id><content type="html" xml:base="http://localhost:4000/csblog/writing-the-first-post/"><![CDATA[<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// cpp</span>
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Hello, world!"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># python
+</span><span class="k">print</span><span class="p">(</span><span class="s">"Hello, world!"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Rust</span>
+<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">io</span><span class="p">;</span>
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"Hello, world!"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="to-do-list">To-Do List</h2>
+
+<ol>
+  <li>✅ 블로그에 글 하나 올리기</li>
+  <li>✅ 블로그 메인 화면 및 사이드바 등에 개인정보 채워두기 (닉네임, 깃헙 링크 등등)</li>
+  <li>⬜ 제대로 된 자기소개 페이지 하나 만들기</li>
+  <li>✅ 블로그 맨 위에 메뉴 바 만들기</li>
+  <li>✅ 블로그 포스트 검색 기능 만들기</li>
+  <li>⬜ 해시태그 기능 추가하기</li>
+  <li>❔ 블로그 포스트 연도별 / 카테고리 별 뷰 만들기</li>
+  <li>⬜ 블로그에 HTML로 포스트 올리기</li>
+  <li>⬜ Javascript 관련 기능 어떻게 쓰는지 알아보기</li>
+</ol>
+
+<h2 id="tips--troubleshooting">Tips &amp; Troubleshooting</h2>
+
+<ol>
+  <li>Mardown 파일에 포스트 제목을 따로 쓸 필요는 없다. 굳이 쓰면 이렇게 제목이 두 번 표시된다.</li>
+</ol>
+
+<figure style="">
+    <img src="/assets/images/writing-the-first-post/image.png" alt="Screenshot of blog post upper part wtih duplicated title" style="border: 5px solid #555; width: 80%; text-align: center" />
+    <figcaption>이미지에 테두리 넣는 법도 배웠다?</figcaption>
+</figure>
+
+<ol>
+  <li></li>
+</ol>]]></content><author><name>Your Name</name><email>sendol39@gmail.com</email></author><summary type="html"><![CDATA[]]></summary></entry></feed>
