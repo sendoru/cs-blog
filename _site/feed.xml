@@ -1,4 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/csblog/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/csblog/" rel="alternate" type="text/html" /><updated>2023-10-20T16:15:07+09:00</updated><id>http://localhost:4000/csblog/feed.xml</id><title type="html">sendol’s CS &amp;amp; Dev. Blog</title><subtitle>.</subtitle><author><name>Your Name</name><email>sendol39@gmail.com</email></author><entry><title type="html">Writing The First Post</title><link href="http://localhost:4000/csblog/writing-the-first-post/" rel="alternate" type="text/html" title="Writing The First Post" /><published>2023-10-19T00:00:00+09:00</published><updated>2023-10-19T00:00:00+09:00</updated><id>http://localhost:4000/csblog/writing-the-first-post</id><content type="html" xml:base="http://localhost:4000/csblog/writing-the-first-post/"><![CDATA[<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// cpp</span>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/csblog/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/csblog/" rel="alternate" type="text/html" /><updated>2023-10-24T17:14:07+09:00</updated><id>http://localhost:4000/csblog/feed.xml</id><title type="html">sendol’s CS &amp;amp; Dev. Blog</title><subtitle>.</subtitle><author><name>sendol</name><email>sendol39@gmail.com</email></author><entry><title type="html">Writing The First Post</title><link href="http://localhost:4000/csblog/writing-the-first-post/" rel="alternate" type="text/html" title="Writing The First Post" /><published>2023-10-19T00:00:00+09:00</published><updated>2023-10-19T00:00:00+09:00</updated><id>http://localhost:4000/csblog/writing-the-first-post</id><content type="html" xml:base="http://localhost:4000/csblog/writing-the-first-post/"><![CDATA[<head>
+    <script type="text/x-mathjax-config">
+
+    MathJax.Hub.Config({
+
+    tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+
+    });
+
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML" async=""></script>
+</head>
+
+<p>Hello, world!는 언제나 국룰이다.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// cpp</span>
 <span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
 </span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Hello, world!"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
@@ -17,31 +33,66 @@
 <span class="p">}</span>
 </code></pre></div></div>
 
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Hello, world!</span><span class="dl">"</span><span class="p">)</span>
+</code></pre></div></div>
+
 <h2 id="to-do-list">To-Do List</h2>
 
 <ol>
-  <li>✅ 블로그에 글 하나 올리기</li>
-  <li>✅ 블로그 메인 화면 및 사이드바 등에 개인정보 채워두기 (닉네임, 깃헙 링크 등등)</li>
-  <li>⬜ 제대로 된 자기소개 페이지 하나 만들기</li>
-  <li>✅ 블로그 맨 위에 메뉴 바 만들기</li>
-  <li>✅ 블로그 포스트 검색 기능 만들기</li>
-  <li>⬜ 해시태그 기능 추가하기</li>
-  <li>❔ 블로그 포스트 연도별 / 카테고리 별 뷰 만들기</li>
-  <li>⬜ 블로그에 HTML로 포스트 올리기</li>
-  <li>⬜ Javascript 관련 기능 어떻게 쓰는지 알아보기</li>
+    <li> ✅ 블로그에 글 하나 올리기 </li>
+    <li> ✅ 블로그 메인 화면 및 사이드바 등에 개인정보 채워두기 (닉네임, 깃헙 링크 등등) </li>
+    <li> ⬜ 제대로 된 자기소개 페이지 하나 만들기 </li>
+    <li> ✅ 블로그 맨 위에 메뉴 바 만들기 </li>
+    <li> ✅ 블로그 포스트 검색 기능 만들기 </li>
+    <li> ⬜ 폰트 및 레이아웃 조절하기 </li>
+    <li> ⬜ 해시태그 기능 추가하기 </li>
+    <li> ❔ 블로그 포스트 연도별 / 카테고리 별 뷰 만들기 </li>
+    <li> ⬜ 블로그에 HTML로 포스트 올리기 </li>
+    <li> ⬜ Javascript 관련 기능 어떻게 쓰는지 알아보기</li>
 </ol>
 
 <h2 id="tips--troubleshooting">Tips &amp; Troubleshooting</h2>
 
 <ol>
-  <li>Mardown 파일에 포스트 제목을 따로 쓸 필요는 없다. 굳이 쓰면 이렇게 제목이 두 번 표시된다.</li>
-</ol>
+  <li>
+    <p>Mardown 파일에 포스트 제목을 따로 쓸 필요는 없다. 굳이 쓰면 이렇게 제목이 두 번 표시된다.</p>
 
-<figure style="">
-    <img src="/assets/images/writing-the-first-post/image.png" alt="Screenshot of blog post upper part wtih duplicated title" style="border: 5px solid #555; width: 80%; text-align: center" />
-    <figcaption>이미지에 테두리 넣는 법도 배웠다?</figcaption>
-</figure>
+    <figure style="test-align: center;">
+     <img src="/csblog/assets/images/writing-the-first-post/image_1.png" alt="Screenshot of blog post upper part wtih duplicated title" style="border: 5px solid #555; text-align: center" />
+     <figcaption> 이미지에 테두리 넣는 법도 배웠다? </figcaption>
+ </figure>
+  </li>
+  <li>
+    <p>Markdown에서 <code class="language-plaintext highlighter-rouge">1. ... &lt;br&gt; 2. ... &lt;br&gt; ...</code>같은 형태로 글을 쓰면 저절로 ordered list가 된다. ordered list 안의 (plain text를 포함한) 컴포넌트를 작성할 때 들여쓰기를 안 해주면 컴포넌트가 리스트 밖으로 빠져나온다던가 리스트 번호가 1부터 다시 시작한다던가 하는 안 좋은 일이 일어난다. HTML의 <code class="language-plaintext highlighter-rouge">&lt;ol&gt;</code> + <code class="language-plaintext highlighter-rouge">&lt;li&gt;</code> 등의 태그에서는 스코프가 명확히 정해져 있어서 이런 걸 쓰면 크게 신경 쓸 필요는 없는 일이긴 하다.</p>
 
-<ol>
+    <figure style="test-align: center;">
+     <img src="/csblog/assets/images/writing-the-first-post/image_2.png" alt="" style="border: 5px solid #555; text-align: center" />
+
+     <figcaption> 대충 이렇게 된다. </figcaption>
+ </figure>
+  </li>
+  <li>
+    <p>LaTeX로 수식을 써보자.</p>
+
+\[e^{i \theta} = \cos \theta + i \sin \theta\]
+
+    <p>그냥은 안 된다. 다음 코드를 HTML의 <code class="language-plaintext highlighter-rouge">&lt;head&gt;</code>에 추가하면 된다.</p>
+    <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nt">&lt;head&gt;</span>
+     <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/x-mathjax-config"</span><span class="nt">&gt;</span>
+
+     <span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Config</span><span class="p">({</span>
+
+     <span class="na">tex2jax</span><span class="p">:</span> <span class="p">{</span><span class="na">inlineMath</span><span class="p">:</span> <span class="p">[[</span><span class="dl">'</span><span class="s1">$</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">$</span><span class="dl">'</span><span class="p">],</span> <span class="p">[</span><span class="dl">'</span><span class="se">\\</span><span class="s1">(</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="se">\\</span><span class="s1">)</span><span class="dl">'</span><span class="p">]]}</span>
+
+     <span class="p">});</span>
+
+     <span class="nt">&lt;/script&gt;</span>
+
+     <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML'</span> <span class="na">async</span><span class="nt">&gt;&lt;/script&gt;</span>
+ <span class="nt">&lt;/head&gt;</span>
+</code></pre></div>    </div>
+    <p>Markdown으로 작성 중인 경우에는 <code class="language-plaintext highlighter-rouge">&lt;head&gt; &lt;/head&gt;</code> 문서 맨 위에 새로 만들어주고 그 안에 저걸 끼워넣으면 된다. 그런데 markdown에서 이렇게 하면 VSCode의 Markdown Preview 확장 프로그램이 맛이 가기 때문에 작성 내용이 어떻게 표시되는지 보고 싶다면 웹 브라우저에서 확인해야 한다.</p>
+  </li>
   <li></li>
-</ol>]]></content><author><name>Your Name</name><email>sendol39@gmail.com</email></author><summary type="html"><![CDATA[]]></summary></entry></feed>
+  <li>더 쓸게 없으면 기능 추가나 해 보자.</li>
+</ol>]]></content><author><name>sendol</name><email>sendol39@gmail.com</email></author><summary type="html"><![CDATA[]]></summary></entry></feed>
