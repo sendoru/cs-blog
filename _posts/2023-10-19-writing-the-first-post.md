@@ -55,14 +55,14 @@ console.log("Hello, world!")
 <ol>
     <li> ✅ 블로그에 글 하나 올리기 </li>
     <li> ✅ 블로그 메인 화면 및 사이드바 등에 개인정보 채워두기 (닉네임, 깃헙 링크 등등) </li>
-    <li> ⬜ 제대로 된 자기소개 페이지 하나 만들기 <del><- 쓸 거 없어서 못 만드는 중</del> </li>
+    <li> ⬜ 제대로 된 자기소개 페이지 하나 만들기 <del><- 쓸 거 없어서 못 만드는 중</del> ㄱ</li>
     <li> ✅ 블로그 맨 위에 메뉴 바 만들기 </li>
     <li> ✅ 블로그 포스트 검색 기능 만들기 </li>
-    <li> ✅ 폰트 및 레이아웃 조절하기 </li>
+    <li> <del>✅</del> 폰트 및 레이아웃 조절하기. 아직 할 게 좀 남았는데 글 하나 더 써서 기록해둬야겠다.</li>
     <li> ✅ 태그 및 기능 추가하기 </li>
     <li> ❔ 블로그 포스트 연도별 / 카테고리 별 뷰 만들기 <- 반 정도 함 </li>
-    <li> ⬜ 블로그에 HTML로 포스트 올리기 </li>
-    <li> ⬜ Javascript 관련 기능 어떻게 쓰는지 알아보기</li>
+    <li> <del>⬜ 블로그에 HTML로 포스트 올리기</del> 생각보다 구리다. 그냥 MD에 임베드해서 쓰자. </li>
+    <li> <del>⬜ Javascript 관련 기능 어떻게 쓰는지 알아보기</del> 나중에 할래</li>
 </ol>
 
 ## Tips & Troubleshooting
@@ -111,14 +111,13 @@ console.log("Hello, world!")
 4. 레이아웃 변경
 
     지금 레이아웃에서 마음에 안 드는 게 몇 가지 있다.
-    <figure style="text-align: center;">
+    <figure style="width: 80%; margin: auto;">
         <img src="/cs-blog/assets/images/writing-the-first-post/image_3.png" alt="" style="text-align: center">
     </figure>
 
     일반적인 PC 환경인 가로로 길쭉한 화면 상태에서, 글씨가 쓸데없이 커져서 한 화면에 표시되는 정보량이 너무 적어진다. 화면의 가로 길이가 너무 짧다는 생각도 드는데 이것도 폰트 영향일 수도 있어서 폰트부터 고쳐 본 다음에 다시 확인해야 될 것 같다.
-
-    <figure style="text-align: center;">
-        <img src="/cs-blog/assets/images/writing-the-first-post/image_4.png" alt="" style="text-align: center">
+    <figure style="width: 80%; margin: auto;">
+        <img src="/cs-blog/assets/images/writing-the-first-post/image_4.png" alt="">
         <figcaption> 이 정도면 좋을텐데 </figcaption>
     </figure>
 
@@ -143,4 +142,14 @@ console.log("Hello, world!")
 
     위 문단에서 첫 번째 링크는 접속이 안 되어야 할 것 같은데 캐싱된 게 있는지 예전 페이지로 접속이 된다. 별 상관은 없을 듯
 
-6. 아 뭐하지
+6. ```<div>``` 또는 그 이외의 컨테이너 가운데 정렬
+
+    ```html
+    <figure>
+        <img src="/cs-blog/assets/images/writing-the-first-post/image_4.png" alt="">
+        <figcaption> 이 정도면 좋을텐데 </figcaption>
+    </figure>
+    ```
+    
+    이렇게 이미지를 넣을 때, 이미지 사이즈를 80%로 줄이고 가운데 정렬로 만드려면  ```style="width: 80%; margin: auto;"``` 스타일 속성을 **figure**에 넣어줘야 한다.
+

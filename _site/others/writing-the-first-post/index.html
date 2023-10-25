@@ -9,7 +9,7 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Writing The First Post - sendol&#8217;s CS &amp; Dev. Blog</title>
+<!-- begin _includes/seo.html --><title>Writing The First Post - sendol’s CS &amp; Dev. Blog</title>
 <meta name="description" content="">
 
 
@@ -117,9 +117,13 @@
           
         </a>
         <ul class="visible-links"><li class="masthead__menu-item">
-              <a href="https://mmistakes.github.io/minimal-mistakes/about/">About</a>
+              <a href="/cs-blog/portfolio/">About</a>
             </li><li class="masthead__menu-item">
-              <a href="/cs-blog/year-archive/">Posts </a>
+              <a href="/cs-blog/year-archive/">Posts (by Year)</a>
+            </li><li class="masthead__menu-item">
+              <a href="/cs-blog/tags/">Posts (by Tag)</a>
+            </li><li class="masthead__menu-item">
+              <a href="/cs-blog/category/">Posts (by Category)</a>
             </li></ul>
         
         <button class="search__toggle" type="button">
@@ -354,14 +358,14 @@
 <ol>
     <li> ✅ 블로그에 글 하나 올리기 </li>
     <li> ✅ 블로그 메인 화면 및 사이드바 등에 개인정보 채워두기 (닉네임, 깃헙 링크 등등) </li>
-    <li> ⬜ 제대로 된 자기소개 페이지 하나 만들기 <del>&lt;- 쓸 거 없어서 못 만드는 중</del> </li>
+    <li> ⬜ 제대로 된 자기소개 페이지 하나 만들기 <del>&lt;- 쓸 거 없어서 못 만드는 중</del> ㄱ</li>
     <li> ✅ 블로그 맨 위에 메뉴 바 만들기 </li>
     <li> ✅ 블로그 포스트 검색 기능 만들기 </li>
-    <li> ✅ 폰트 및 레이아웃 조절하기 </li>
+    <li> <del>✅</del> 폰트 및 레이아웃 조절하기. 아직 할 게 좀 남았는데 글 하나 더 써서 기록해둬야겠다.</li>
     <li> ✅ 태그 및 기능 추가하기 </li>
     <li> ❔ 블로그 포스트 연도별 / 카테고리 별 뷰 만들기 &lt;- 반 정도 함 </li>
-    <li> ⬜ 블로그에 HTML로 포스트 올리기 </li>
-    <li> ⬜ Javascript 관련 기능 어떻게 쓰는지 알아보기</li>
+    <li> <del>⬜ 블로그에 HTML로 포스트 올리기</del> 생각보다 구리다. 그냥 MD에 임베드해서 쓰자. </li>
+    <li> <del>⬜ Javascript 관련 기능 어떻게 쓰는지 알아보기</del> 나중에 할래</li>
 </ol>
 
 <h2 id="tips--troubleshooting">Tips &amp; Troubleshooting</h2>
@@ -414,14 +418,13 @@
     <p>레이아웃 변경</p>
 
     <p>지금 레이아웃에서 마음에 안 드는 게 몇 가지 있다.</p>
-    <figure style="text-align: center;">
+    <figure style="width: 80%; margin: auto;">
      <img src="/cs-blog/assets/images/writing-the-first-post/image_3.png" alt="" style="text-align: center" />
  </figure>
 
     <p>일반적인 PC 환경인 가로로 길쭉한 화면 상태에서, 글씨가 쓸데없이 커져서 한 화면에 표시되는 정보량이 너무 적어진다. 화면의 가로 길이가 너무 짧다는 생각도 드는데 이것도 폰트 영향일 수도 있어서 폰트부터 고쳐 본 다음에 다시 확인해야 될 것 같다.</p>
-
-    <figure style="text-align: center;">
-     <img src="/cs-blog/assets/images/writing-the-first-post/image_4.png" alt="" style="text-align: center" />
+    <figure style="width: 80%; margin: auto;">
+     <img src="/cs-blog/assets/images/writing-the-first-post/image_4.png" alt="" />
      <figcaption> 이 정도면 좋을텐데 </figcaption>
  </figure>
 
@@ -447,9 +450,18 @@
     <p>위 문단에서 첫 번째 링크는 접속이 안 되어야 할 것 같은데 캐싱된 게 있는지 예전 페이지로 접속이 된다. 별 상관은 없을 듯</p>
   </li>
   <li>
-    <p>아 뭐하지</p>
+    <p><code class="language-plaintext highlighter-rouge">&lt;div&gt;</code> 또는 그 이외의 컨테이너 가운데 정렬</p>
+
+    <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nt">&lt;figure&gt;</span>
+     <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/cs-blog/assets/images/writing-the-first-post/image_4.png"</span> <span class="na">alt=</span><span class="s">""</span><span class="nt">&gt;</span>
+     <span class="nt">&lt;figcaption&gt;</span> 이 정도면 좋을텐데 <span class="nt">&lt;/figcaption&gt;</span>
+ <span class="nt">&lt;/figure&gt;</span>
+</code></pre></div>    </div>
+
+    <p>이렇게 이미지를 넣을 때, 이미지 사이즈를 80%로 줄이고 가운데 정렬로 만드려면  <code class="language-plaintext highlighter-rouge">style="width: 80%; margin: auto;"</code> 스타일 속성을 <strong>figure</strong>에 넣어줘야 한다.</p>
   </li>
 </ol>
+
 
         
       </section>
@@ -513,6 +525,16 @@
 
 
       
+  <nav class="pagination">
+    
+      <a href="#" class="pagination--pager disabled">Previous</a>
+    
+    
+      <a href="/cs-blog/others/writing-html-post/" class="pagination--pager" title="Writing HTML Post
+">Next</a>
+    
+  </nav>
+
     </div>
 
     
@@ -525,9 +547,103 @@
       <div class="grid__wrapper">
         
           
-            
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/cs-blog/others/%EB%A0%88%EC%9D%B4%EC%95%84%EC%9B%83-%EC%88%98%EC%A0%95-to-do-list/" rel="permalink">레이아웃 수정 To-Do List
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-10-25T00:00:00+09:00">October 25, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          less than 1 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">문제 해결
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/cs-blog/others/writing-html-post/" rel="permalink">Writing HTML Post
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-10-24T00:00:00+09:00">October 24, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          less than 1 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+        
       </div>
     </div>
+  
   
 </div>
 
