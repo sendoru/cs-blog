@@ -95,6 +95,12 @@ fieldset {
   widows: 3;
 }
 
+ul,
+ol,
+dl {
+  margin-left: -8pt;
+}
+
 /* abbreviations */
 
 abbr[title],
