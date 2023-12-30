@@ -10,7 +10,7 @@
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>레이아웃 수정 To-Do List - sendol’s CS &amp; Dev. Blog</title>
-<meta name="description" content="문제 해결">
+<meta name="description" content="">
 
 
   <meta name="author" content="sendol">
@@ -26,7 +26,7 @@
 <meta property="og:url" content="http://localhost:4000/cs-blog/others/%EB%A0%88%EC%9D%B4%EC%95%84%EC%9B%83-%EC%88%98%EC%A0%95-to-do-list/">
 
 
-  <meta property="og:description" content="문제 해결">
+  <meta property="og:description" content="">
 
 
 
@@ -271,7 +271,7 @@
 
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="레이아웃 수정 To-Do List">
-    <meta itemprop="description" content="문제 해결">
+    <meta itemprop="description" content="">
     <meta itemprop="datePublished" content="2023-10-25T00:00:00+09:00">
     
 
@@ -315,7 +315,9 @@
 
       <section class="page__content e-content" itemprop="text">
         
-        <h2 id="문제-해결">문제 해결</h2>
+        <head></head>
+
+<h2 id="문제-해결">문제 해결</h2>
 
 <ol>
   <li>
@@ -325,7 +327,14 @@
      <img src="/cs-blog/assets/images/레이아웃-수정-to-do-list/image_1.png" alt="image_1.png" />
  </figure>
 
-    <p>브라우저의 width가 <strong>medium-wide</strong>일 때 문제가 발생한다. 어디서 고쳐야될까</p>
+    <p>브라우저의 width가 <strong>medium</strong>일 때 문제가 발생한다.</p>
+
+    <p>대충 고쳤다. <code class="language-plaintext highlighter-rouge">_sass/minimal-mistakes/_page.scss</code>에서, <code class="language-plaintext highlighter-rouge">.page__related</code>에 아래 있는 저걸 추가하면 된다.</p>
+
+    <div class="language-scss highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">@include</span> <span class="nd">breakpoint</span><span class="p">(</span><span class="nv">$medium</span><span class="p">)</span> <span class="p">{</span>
+     <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+ <span class="p">}</span>
+</code></pre></div>    </div>
   </li>
   <li>
     <p>상단바 메뉴</p>
@@ -412,7 +421,8 @@
 ">Previous</a>
     
     
-      <a href="#" class="pagination--pager disabled">Next</a>
+      <a href="/cs-blog/others/Ubuntu-Destop-+-NVIDIA-GPU-%ED%99%98%EA%B2%BD%EC%97%90%EC%84%9C-%EB%93%80%EC%96%BC-%EB%AA%A8%EB%8B%88%ED%84%B0-%EC%84%A4%EC%A0%95/" class="pagination--pager" title="Ubuntu Destop + Nvidia Gpu 환경에서 듀얼 모니터 설정
+">Next</a>
     
   </nav>
 
@@ -426,6 +436,53 @@
     <div class="page__related">
       <h2 class="page__related-title">You may also enjoy</h2>
       <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/cs-blog/others/Ubuntu-Destop-+-NVIDIA-GPU-%ED%99%98%EA%B2%BD%EC%97%90%EC%84%9C-%EB%93%80%EC%96%BC-%EB%AA%A8%EB%8B%88%ED%84%B0-%EC%84%A4%EC%A0%95/" rel="permalink">Ubuntu Destop + Nvidia Gpu 환경에서 듀얼 모니터 설정
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-12-30T00:00:00+09:00">December 30, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          1 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
         
           
 
