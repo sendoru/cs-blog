@@ -18,34 +18,38 @@ NVIDIA X Server를 잘 만져줘서 설정이 제대로 됐다고 생각하고 �
 
 1. NVIDIA X Server로 설정 변경
 
-우선 터미널에 ```sudo nvidia-settings```를 쳐서 X Server를 실행시킨다. 듀얼 모니터의 해상도나 모니터 배치 같은 설정은 왼쪽 메뉴에서 **X Server Display Configuration**을 선택하면 볼 수 있다.
+    우선 터미널에 ```sudo nvidia-settings```를 쳐서 X Server를 실행시킨다. 듀얼 모니터의 해상도나 모니터 배치 같은 설정은 왼쪽 메뉴에서 **X Server Display Configuration**을 선택하면 볼 수 있다.
 
-메인 모니터 설정은, 위쪽에서 메인 모니터로 설정할 모니터를 선택하고 **Make this the primary display for the X screen**을 체크해주면 된다. 모니터를 회전시켜서 사용하는 경우, **Orientation**의 설정을 바꿔주면 된다.
+    메인 모니터 설정은, 위쪽에서 메인 모니터로 설정할 모니터를 선택하고 **Make this the primary display for the X screen**을 체크해주면 된다. 모니터를 회전시켜서 사용하는 경우, **Orientation**의 설정을 바꿔주면 된다.
 
-나처럼 모니터의 일부만 사용할 경우 **Advanced...** 뷰의 **ViewPortIn, ViewPortOut, Panning** 옵션을 사용해야 된다. 
+    나처럼 모니터의 일부만 사용할 경우 **Advanced...** 뷰의 **ViewPortIn, ViewPortOut, Panning** 옵션을 사용해야 된다. 
 
+    <figure style="text-align: center;">
+        <img src="/cs-blog/assets/images/Ubuntu-Destop-+-NVIDIA-GPU-환경에서-듀얼-모니터-설정/nvidia-x-server.png" alt="" style="border: 5px solid #555; text-align: center">
+    </figure>
+
+    **ViewPortIn**과 **Panning**에는 모두 출력할 화면의 해상도를 적는다. **ViewPortOut**은 ```Xsize```x```Ysize```+```Xoffset```+```Yoffset``` 형식이다. 모니터를 회전시키지 않은 상태라면 ```Xsize```x```Ysize``` 부분에는 ViewPortIn과 Panning에 적은 값을 그대로 적으면 되고, 회전시켰다면 ```Xsize```와 ```Ysize```의 순서를 바꿔서 적으면 된다. ```Xoffset```과 ```Yoffset```은 화면의 표시 위치를 결정하는 변수이다. 잘 조절해 가면서 자신에게 맞는 값을 설정하면 된다.
 
 2. 재부팅 / 다시 로그인 했을 때도 설정 유지
 
-터미널에 ```sudo nvidia-settings```를 쳐서 ```xorg.conf``` 파일을 생성한다. 이후 ```xorg.conf``` 파일에서 **"Device"**로 시작하는 블럭을 찾은 후, 아래 내용을 블럭 끝에 붙여넣는다.
+    터미널에 ```sudo nvidia-settings```를 쳐서 ```xorg.conf``` 파일을 생성한다. 이후 ```xorg.conf``` 파일에서 **"Device"**로 시작하는 블럭을 찾은 후, 아래 내용을 블럭 끝에 붙여넣는다.
 
+    ```
+    Option "RegistryDwords" "PowerMizerEnable=0x1; PerfLevelSrc=0x3322"
+    ```
 
-```
-Option "RegistryDwords" "PowerMizerEnable=0x1; PerfLevelSrc=0x3322"
-```
-
-(출처: https://askubuntu.com/questions/379483/nvidia-x-server-settings-lost-on-every-reboot)
+    (출처: https://askubuntu.com/questions/379483/nvidia-x-server-settings-lost-on-every-reboot)
 
 
 3. 로그인 전 화면에도 설정 적용
 
-아래 명령어를 터미널에 입력하면 된다. gdm은 그래픽 로그인 화면을 관리하는 특수한 유저라고 생각하면 된다.
+    아래 명령어를 터미널에 입력하면 된다. gdm은 그래픽 로그인 화면을 관리하는 특수한 유저라고 생각하면 된다.
 
-```
-sudo cp ~/.config/monitors.xml ~gdm/.config/monitors.xml
-sudo chown gdm:gdm ~gdm/.config/monitors.xml
-```
+    ```
+    sudo cp ~/.config/monitors.xml ~gdm/.config/monitors.xml
+    sudo chown gdm:gdm ~gdm/.config/monitors.xml
+    ```
 
-왜인지는 모르겠지만 이 방법으로 해결했다는 다른 글들을 보면 한 번에 되지 않고 재부팅을 몇 번씩 해가면서 여러 번 시도해야 했다는 얘기가 있다.
+    왜인지는 모르겠지만 이 방법으로 해결했다는 다른 글들을 보면 한 번에 되지 않고 재부팅을 몇 번씩 해가면서 여러 번 시도해야 했다는 얘기가 있다.
 
-(출처: https://askubuntu.com/questions/1043337/is-there-to-make-the-login-screen-appear-on-the-external-display-in-18-04)
+    (출처: https://askubuntu.com/questions/1043337/is-there-to-make-the-login-screen-appear-on-the-external-display-in-18-04)
