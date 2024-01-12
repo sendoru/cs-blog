@@ -82,6 +82,11 @@
 <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
 
+<!-- darkmode css -->
+
+<link rel="stylesheet" href="/cs-blog/assets/css/main_dark.css">
+
+
 
 
     <!-- start custom head snippets -->
@@ -121,6 +126,12 @@
             </li><li class="masthead__menu-item">
               <a href="/cs-blog/category/">Posts (by Category)</a>
             </li></ul>
+        <!-- 다크 모드 토글 버튼 -->
+        
+        <input id="toggle_dark_theme" class="mh_toogle" type="checkbox">
+        <label for="toggle_dark_theme" class="material-icons-sharp mh_toggle_btn" style="margin: 0px"></label>
+        
+
         
         <button class="search__toggle" type="button">
           <span class="visually-hidden">Toggle search</span>
@@ -134,8 +145,10 @@
         <ul class="hidden-links hidden"></ul>
       </nav>
     </div>
+    
   </div>
 </div>
+
 
 
     <div class="initial-content">
@@ -568,7 +581,7 @@
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2023 sendol. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2024 sendol. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>
@@ -586,6 +599,10 @@
 
 
 
+
+  
+    <script src="/cs-blog/assets/js/custom/dark-theme.js"></script>
+  
 
 
 

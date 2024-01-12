@@ -18,6 +18,12 @@
             </li>
           {%- endfor -%}
         </ul>
+        <!-- 다크 모드 토글 버튼 -->
+        {% if site.dark_theme_toggle == true %}
+        <input id="toggle_dark_theme" class="mh_toogle" type="checkbox">
+        <label for="toggle_dark_theme" class="material-icons-sharp mh_toggle_btn" style="margin: 0px"></label>
+        {% endif %}
+
         {% if site.search == true %}
         <button class="search__toggle" type="button">
           <span class="visually-hidden">{{ site.data.ui-text[site.locale].search_label | default: "Toggle search" }}</span>
@@ -31,5 +37,7 @@
         <ul class="hidden-links hidden"></ul>
       </nav>
     </div>
+    
   </div>
 </div>
+
