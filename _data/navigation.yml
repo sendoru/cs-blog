@@ -9,7 +9,7 @@ main:
   - title: "Posts (by Tag)"
     url: /tags/
   - title: "Posts (by Category)"
-    url: /category/
+    url: /categories/
   # - title: "Sample Collections"
   #   url: /collection-archive/
   # - title: "Sitemap"
