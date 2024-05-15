@@ -1,4 +1,173 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://sendoru.github.io/cs-blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://sendoru.github.io/cs-blog/" rel="alternate" type="text/html" /><updated>2024-01-12T18:28:12+09:00</updated><id>https://sendoru.github.io/cs-blog/feed.xml</id><title type="html">sendol’s CS &amp;amp; Dev. Blog</title><subtitle>sendol's CS &amp; Dev. Blog</subtitle><author><name>sendol</name><email>sendol39@gmail.com</email></author><entry><title type="html">Ubuntu Destop + Nvidia Gpu 환경에서 듀얼 모니터 설정</title><link href="https://sendoru.github.io/cs-blog/others/Ubuntu-Destop-+-NVIDIA-GPU-%ED%99%98%EA%B2%BD%EC%97%90%EC%84%9C-%EB%93%80%EC%96%BC-%EB%AA%A8%EB%8B%88%ED%84%B0-%EC%84%A4%EC%A0%95/" rel="alternate" type="text/html" title="Ubuntu Destop + Nvidia Gpu 환경에서 듀얼 모니터 설정" /><published>2023-12-30T00:00:00+09:00</published><updated>2023-12-30T00:00:00+09:00</updated><id>https://sendoru.github.io/cs-blog/others/Ubuntu-Destop-+-NVIDIA-GPU-%ED%99%98%EA%B2%BD%EC%97%90%EC%84%9C-%EB%93%80%EC%96%BC-%EB%AA%A8%EB%8B%88%ED%84%B0-%EC%84%A4%EC%A0%95</id><content type="html" xml:base="https://sendoru.github.io/cs-blog/others/Ubuntu-Destop-+-NVIDIA-GPU-%ED%99%98%EA%B2%BD%EC%97%90%EC%84%9C-%EB%93%80%EC%96%BC-%EB%AA%A8%EB%8B%88%ED%84%B0-%EC%84%A4%EC%A0%95/"><![CDATA[<head></head>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/cs-blog/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/cs-blog/" rel="alternate" type="text/html" /><updated>2024-05-15T16:31:25+09:00</updated><id>http://localhost:4000/cs-blog/feed.xml</id><title type="html">sendol’s CS &amp;amp; Dev. Blog</title><subtitle>sendol's CS &amp; Dev. Blog</subtitle><author><name>sendol</name><email>sendol39@gmail.com</email></author><entry><title type="html">PostgreSQL-Basics</title><link href="http://localhost:4000/cs-blog/others/PostgreSQL-Basics/" rel="alternate" type="text/html" title="PostgreSQL-Basics" /><published>2024-05-15T00:00:00+09:00</published><updated>2024-05-15T00:00:00+09:00</updated><id>http://localhost:4000/cs-blog/others/PostgreSQL-Basics</id><content type="html" xml:base="http://localhost:4000/cs-blog/others/PostgreSQL-Basics/"><![CDATA[<p>대충 아래 링크 강의에 나오는 것 정도를 정리했다.</p>
+
+<p>https://www.freecodecamp.org/learn/relational-database/learn-relational-databases-by-building-a-mario-database/build-a-mario-database</p>
+
+<p>DB 접속: <code class="language-plaintext highlighter-rouge">psql --username=$USERNAME --dbname=$DBNAME</code> (bash에서)</p>
+
+<h2 id="psql-명령어">psql 명령어</h2>
+
+<p>앞에 <code class="language-plaintext highlighter-rouge">\</code> 붙어있는 명령어들은 psql에서 사용하는 명령어들이다.</p>
+<ul>
+  <li>DB list 확인: <code class="language-plaintext highlighter-rouge">\l</code></li>
+  <li>특정 DB 접속: <code class="language-plaintext highlighter-rouge">\c &lt;DB_NAME&gt;</code></li>
+  <li>특정 DB에 접속한 상태에서 table list 확인: <code class="language-plaintext highlighter-rouge">\d</code>,</li>
+  <li>특정 table의 schema 확인: <code class="language-plaintext highlighter-rouge">\d &lt;TABLE_NAME&gt;</code></li>
+</ul>
+
+<h2 id="sql-명령어">SQL 명령어</h2>
+
+<p>SQL 쿼리 명령어들 (<code class="language-plaintext highlighter-rouge">CREATE</code>, <code class="language-plaintext highlighter-rouge">SELECT</code>, <code class="language-plaintext highlighter-rouge">INSERT</code>, <code class="language-plaintext highlighter-rouge">UPDATE</code>, <code class="language-plaintext highlighter-rouge">DELETE</code> 등)은 뒤에 세미콜론을 붙여야 한다.</p>
+
+<h3 id="create">CREATE</h3>
+
+<ul>
+  <li>DB 생성:<br />
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">DATABASE</span> <span class="o">&lt;</span><span class="n">db_name</span><span class="o">&gt;</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Table 생성:<br />
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="o">&lt;</span><span class="k">table_name</span><span class="o">&gt;</span> <span class="p">(</span><span class="n">column1</span> <span class="n">datatype</span> <span class="p">[</span><span class="k">constraint</span><span class="p">],</span> <span class="n">column2</span> <span class="n">datatype</span> <span class="p">[</span><span class="k">constraint</span><span class="p">],</span> <span class="p">...);</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="drop">DROP</h3>
+
+<ul>
+  <li>Table 삭제:<br />
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">DROP</span> <span class="k">TABLE</span> <span class="o">&lt;</span><span class="k">table_name</span><span class="o">&gt;</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>DB 삭제:<br />
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">DROP</span> <span class="k">DATABASE</span> <span class="o">&lt;</span><span class="n">db_name</span><span class="o">&gt;</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="insert">INSERT</h3>
+
+<ul>
+  <li>Tuple 추가:<br />
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">INSERT</span> <span class="k">INTO</span> <span class="o">&lt;</span><span class="k">table_name</span><span class="o">&gt;</span> <span class="p">(</span><span class="n">column1</span><span class="p">,</span> <span class="n">column2</span><span class="p">,</span> <span class="p">...)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">,</span> <span class="p">...);</span>
+</code></pre></div>    </div>
+    <p>한 번에 여러 tuple도 추가할 수 있다.</p>
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">INSERT</span> <span class="k">INTO</span> <span class="o">&lt;</span><span class="k">table_name</span><span class="o">&gt;</span> <span class="p">(</span><span class="n">column1</span><span class="p">,</span> <span class="n">column2</span><span class="p">,</span> <span class="p">...)</span>
+<span class="k">VALUES</span>
+  <span class="p">(</span><span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">,</span> <span class="p">...),</span> 
+  <span class="p">(</span><span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">,</span> <span class="p">...),</span>
+  <span class="p">...;</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="delete">DELETE</h3>
+
+<ul>
+  <li>Tuple 삭제:<br />
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">DELETE</span> <span class="k">FROM</span> <span class="o">&lt;</span><span class="k">table_name</span><span class="o">&gt;</span> <span class="k">WHERE</span> <span class="o">&lt;</span><span class="n">condition</span><span class="o">&gt;</span><span class="p">;</span>
+</code></pre></div>    </div>
+    <ul>
+      <li>Equal은 <code class="language-plaintext highlighter-rouge">==</code>가 아니라 <code class="language-plaintext highlighter-rouge">=</code>이다.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="alter">ALTER</h3>
+
+<ul>
+  <li>Table 이름 변경:<br />
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="o">&lt;</span><span class="k">table_name</span><span class="o">&gt;</span> <span class="k">RENAME</span> <span class="k">TO</span> <span class="o">&lt;</span><span class="n">new_table_name</span><span class="o">&gt;</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>DB 이름 변경:<br />
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">ALTER</span> <span class="k">DATABASE</span> <span class="o">&lt;</span><span class="n">db_name</span><span class="o">&gt;</span> <span class="k">RENAME</span> <span class="k">TO</span> <span class="o">&lt;</span><span class="n">new_db_name</span><span class="o">&gt;</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Table scheme 변경:
+    <ul>
+      <li>Column 추가:<br />
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">ALTER</span> <span class="k">TABLE</span> <span class="o">&lt;</span><span class="k">table_name</span><span class="o">&gt;</span> <span class="k">ADD</span> <span class="o">&lt;</span><span class="k">column_name</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">data_type</span><span class="o">&gt;</span> <span class="p">[</span><span class="o">&lt;</span><span class="k">constraint_name</span><span class="o">&gt;</span><span class="p">];</span>
+</code></pre></div>        </div>
+        <ul>
+          <li>외래 키로 추가
+            <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">ALTER</span> <span class="k">TABLE</span> <span class="o">&lt;</span><span class="k">table_name</span><span class="o">&gt;</span>
+  <span class="k">ADD</span> <span class="k">COLUMN</span> <span class="o">&lt;</span><span class="k">column_name</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">data_type</span><span class="o">&gt;</span>
+  <span class="k">REFERENCES</span> <span class="o">&lt;</span><span class="n">another_table_name</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&lt;</span><span class="n">another_column_name</span><span class="o">&gt;</span><span class="p">);</span>
+</code></pre></div>            </div>
+          </li>
+        </ul>
+      </li>
+      <li>Column 삭제:<br />
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">ALTER</span> <span class="k">TABLE</span> <span class="o">&lt;</span><span class="k">table_name</span><span class="o">&gt;</span> <span class="k">DROP</span> <span class="o">&lt;</span><span class="k">column_name</span><span class="o">&gt;</span><span class="p">;</span>
+</code></pre></div>        </div>
+      </li>
+      <li>Column 이름 변경:<br />
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">ALTER</span> <span class="k">TABLE</span> <span class="o">&lt;</span><span class="k">table_name</span><span class="o">&gt;</span> <span class="k">RENAME</span> <span class="k">COLUMN</span> <span class="o">&lt;</span><span class="k">column_name</span><span class="o">&gt;</span> <span class="k">TO</span> <span class="o">&lt;</span><span class="n">new_column_name</span><span class="o">&gt;</span><span class="p">;</span>
+</code></pre></div>        </div>
+      </li>
+      <li>Column 타입 변경:<br />
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">ALTER</span> <span class="k">TABLE</span> <span class="o">&lt;</span><span class="k">table_name</span><span class="o">&gt;</span> <span class="k">ALTER</span> <span class="k">COLUMN</span> <span class="o">&lt;</span><span class="k">column_name</span><span class="o">&gt;</span> <span class="k">TYPE</span> <span class="o">&lt;</span><span class="n">new_data_type</span><span class="o">&gt;</span><span class="p">;</span>
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>Column에 constraint 추가:<br />
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">NOT NULL</code> constraint 추가:<br />
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">ALTER</span> <span class="k">TABLE</span> <span class="o">&lt;</span><span class="k">table_name</span><span class="o">&gt;</span> <span class="k">ALTER</span> <span class="k">COLUMN</span> <span class="o">&lt;</span><span class="k">column_name</span><span class="o">&gt;</span> <span class="k">SET</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">;</span>
+</code></pre></div>        </div>
+      </li>
+      <li><code class="language-plaintext highlighter-rouge">UNIQUE</code> constraint 추가:<br />
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">ALTER</span> <span class="k">TABLE</span> <span class="o">&lt;</span><span class="k">table_name</span><span class="o">&gt;</span> <span class="k">ADD</span> <span class="k">CONSTRAINT</span> <span class="o">&lt;</span><span class="k">constraint_name</span><span class="o">&gt;</span> <span class="k">UNIQUE</span> <span class="p">(</span><span class="o">&lt;</span><span class="k">column_name</span><span class="o">&gt;</span><span class="p">);</span>
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>특정 Column을 기본 키로 설정:<br />
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="o">&lt;</span><span class="k">table_name</span><span class="o">&gt;</span> <span class="k">ADD</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="o">&lt;</span><span class="k">column_name</span><span class="o">&gt;</span><span class="p">);</span>
+</code></pre></div>    </div>
+  </li>
+  <li>특정 Column을 외래 키로 설정:<br />
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="o">&lt;</span><span class="k">table_name</span><span class="o">&gt;</span> <span class="k">ADD</span> <span class="k">FOREIGN</span> <span class="k">KEY</span> <span class="p">(</span><span class="o">&lt;</span><span class="k">column_name</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">REFERENCES</span> <span class="o">&lt;</span><span class="n">another_table_name</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&lt;</span><span class="n">another_column_name</span><span class="o">&gt;</span><span class="p">);</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="update">Update</h3>
+
+<ul>
+  <li>Tuple 업데이트:<br />
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">UPDATE</span> <span class="o">&lt;</span><span class="k">table_name</span><span class="o">&gt;</span> <span class="k">SET</span> <span class="n">column1</span> <span class="o">=</span> <span class="n">value1</span><span class="p">,</span> <span class="n">column2</span> <span class="o">=</span> <span class="n">value2</span><span class="p">,</span> <span class="p">...</span> <span class="k">WHERE</span> <span class="o">&lt;</span><span class="n">condition</span><span class="o">&gt;</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="select">SELECT</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">column1</span><span class="p">,</span> <span class="n">column2</span><span class="p">,</span> <span class="p">...</span>
+    <span class="k">FROM</span> <span class="o">&lt;</span><span class="k">table_name</span><span class="o">&gt;</span>
+    <span class="p">[</span><span class="k">WHERE</span> <span class="o">&lt;</span><span class="n">condition</span><span class="o">&gt;</span><span class="p">]</span>
+    <span class="p">[</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">column1</span><span class="p">,</span> <span class="n">column2</span><span class="p">,</span> <span class="p">...</span> <span class="p">[</span><span class="k">ASC</span><span class="o">|</span><span class="k">DESC</span><span class="p">]]</span>
+    <span class="p">[</span><span class="k">LIMIT</span> <span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="p">]</span>
+    <span class="p">;</span>
+</code></pre></div></div>
+<p>group by, having, join, 집계 함수, 중첩 쿼리 같은 것 까지 여기서 설명하긴 너무 길다. 다른 글에서 다루려면 join에 포스트 하나, 집계 함수에 포스트 하나, 중첩 쿼리에 포스트 하나 정도 될 것 같긴 한데…</p>
+
+<h3 id="자료형">자료형</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">int</code>: 다 알고 있을 그거</li>
+  <li><code class="language-plaintext highlighter-rouge">numeric(precision, scale)</code>: 고정소수점 숫자. precision은 전체 자릿수, scale은 소수점 이하 자릿수</li>
+  <li><code class="language-plaintext highlighter-rouge">serial</code>: auto-incrementing integer</li>
+  <li><code class="language-plaintext highlighter-rouge">varchar(n)</code>: 최대 n글자의 가변 길이 문자열</li>
+  <li><code class="language-plaintext highlighter-rouge">text</code>: 길이 제한 없는 가변 길이 문자열
+    <ul>
+      <li>문자열은 ‘‘로 감싸야 한다. ““는 table, column 이름 같은 데 사용된다.</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">boolean</code>: <code class="language-plaintext highlighter-rouge">true</code> 또는 <code class="language-plaintext highlighter-rouge">false</code></li>
+  <li><code class="language-plaintext highlighter-rouge">date</code>: 날짜. <code class="language-plaintext highlighter-rouge">YYYY-MM-DD</code> 형식 문자열 직접 입력 가능</li>
+</ul>]]></content><author><name>sendol</name><email>sendol39@gmail.com</email></author><category term="Others" /><category term="Database" /><category term="SQL" /><summary type="html"><![CDATA[대충 아래 링크 강의에 나오는 것 정도를 정리했다.]]></summary></entry><entry><title type="html">Ubuntu Destop + Nvidia Gpu 환경에서 듀얼 모니터 설정</title><link href="http://localhost:4000/cs-blog/others/Ubuntu-Destop-+-NVIDIA-GPU-%ED%99%98%EA%B2%BD%EC%97%90%EC%84%9C-%EB%93%80%EC%96%BC-%EB%AA%A8%EB%8B%88%ED%84%B0-%EC%84%A4%EC%A0%95/" rel="alternate" type="text/html" title="Ubuntu Destop + Nvidia Gpu 환경에서 듀얼 모니터 설정" /><published>2023-12-30T00:00:00+09:00</published><updated>2023-12-30T00:00:00+09:00</updated><id>http://localhost:4000/cs-blog/others/Ubuntu-Destop-+-NVIDIA-GPU-%ED%99%98%EA%B2%BD%EC%97%90%EC%84%9C-%EB%93%80%EC%96%BC-%EB%AA%A8%EB%8B%88%ED%84%B0-%EC%84%A4%EC%A0%95</id><content type="html" xml:base="http://localhost:4000/cs-blog/others/Ubuntu-Destop-+-NVIDIA-GPU-%ED%99%98%EA%B2%BD%EC%97%90%EC%84%9C-%EB%93%80%EC%96%BC-%EB%AA%A8%EB%8B%88%ED%84%B0-%EC%84%A4%EC%A0%95/"><![CDATA[<head></head>
 
 <p>나는 좀 특이한 구성으로 듀얼 모니터 환경을 세팅해 놨다. 왼쪽에는 1920*1080 해상도의 서브 모니터를 90도 회전시킨 다음 화면 맨 위쪽까지 쳐다보는 게 불편해서 위아래 일부를 잘라놓은 상태로 1080*1440 해상도로 사용하고 있고, 오른쪽에는 2560*1440 해상도의 메인 모니터를 그나마 평범하게 설치해서 사용하고 있다.</p>
 
@@ -47,7 +216,7 @@
 
     <p>(출처: https://askubuntu.com/questions/1043337/is-there-to-make-the-login-screen-appear-on-the-external-display-in-18-04)</p>
   </li>
-</ol>]]></content><author><name>sendol</name><email>sendol39@gmail.com</email></author><category term="Others" /><category term="ubuntu" /><category term="environment-setup" /><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">레이아웃 수정 To-Do List</title><link href="https://sendoru.github.io/cs-blog/others/%EB%A0%88%EC%9D%B4%EC%95%84%EC%9B%83-%EC%88%98%EC%A0%95-to-do-list/" rel="alternate" type="text/html" title="레이아웃 수정 To-Do List" /><published>2023-10-25T00:00:00+09:00</published><updated>2023-10-25T00:00:00+09:00</updated><id>https://sendoru.github.io/cs-blog/others/%EB%A0%88%EC%9D%B4%EC%95%84%EC%9B%83-%EC%88%98%EC%A0%95-to-do-list</id><content type="html" xml:base="https://sendoru.github.io/cs-blog/others/%EB%A0%88%EC%9D%B4%EC%95%84%EC%9B%83-%EC%88%98%EC%A0%95-to-do-list/"><![CDATA[<head></head>
+</ol>]]></content><author><name>sendol</name><email>sendol39@gmail.com</email></author><category term="Others" /><category term="ubuntu" /><category term="environment-setup" /><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">레이아웃 수정 To-Do List</title><link href="http://localhost:4000/cs-blog/others/%EB%A0%88%EC%9D%B4%EC%95%84%EC%9B%83-%EC%88%98%EC%A0%95-to-do-list/" rel="alternate" type="text/html" title="레이아웃 수정 To-Do List" /><published>2023-10-25T00:00:00+09:00</published><updated>2023-10-25T00:00:00+09:00</updated><id>http://localhost:4000/cs-blog/others/%EB%A0%88%EC%9D%B4%EC%95%84%EC%9B%83-%EC%88%98%EC%A0%95-to-do-list</id><content type="html" xml:base="http://localhost:4000/cs-blog/others/%EB%A0%88%EC%9D%B4%EC%95%84%EC%9B%83-%EC%88%98%EC%A0%95-to-do-list/"><![CDATA[<head></head>
 
 <h2 id="문제-해결">문제 해결</h2>
 
@@ -85,7 +254,7 @@
 
 <h3 id="블로그-배너-추가">블로그 배너 추가</h3>
 
-<h3 id="포스트-목차-추가">포스트 목차 추가</h3>]]></content><author><name>sendol</name><email>sendol39@gmail.com</email></author><category term="Others" /><category term="html" /><category term="css" /><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">Writing HTML Post</title><link href="https://sendoru.github.io/cs-blog/others/writing-html-post/" rel="alternate" type="text/html" title="Writing HTML Post" /><published>2023-10-24T00:00:00+09:00</published><updated>2023-10-24T00:00:00+09:00</updated><id>https://sendoru.github.io/cs-blog/others/writing-html-post</id><content type="html" xml:base="https://sendoru.github.io/cs-blog/others/writing-html-post/"><![CDATA[<head>
+<h3 id="포스트-목차-추가">포스트 목차 추가</h3>]]></content><author><name>sendol</name><email>sendol39@gmail.com</email></author><category term="Others" /><category term="html" /><category term="css" /><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">Writing HTML Post</title><link href="http://localhost:4000/cs-blog/others/writing-html-post/" rel="alternate" type="text/html" title="Writing HTML Post" /><published>2023-10-24T00:00:00+09:00</published><updated>2023-10-24T00:00:00+09:00</updated><id>http://localhost:4000/cs-blog/others/writing-html-post</id><content type="html" xml:base="http://localhost:4000/cs-blog/others/writing-html-post/"><![CDATA[<head>
 
 </head>
 <body>
@@ -93,7 +262,7 @@
     <code>
         <!DOCTYPE html>
     </code>
-</body>]]></content><author><name>sendol</name><email>sendol39@gmail.com</email></author><category term="Others" /><category term="html" /><category term="css" /><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">Writing The First Post</title><link href="https://sendoru.github.io/cs-blog/others/writing-the-first-post/" rel="alternate" type="text/html" title="Writing The First Post" /><published>2023-10-19T00:00:00+09:00</published><updated>2023-10-19T00:00:00+09:00</updated><id>https://sendoru.github.io/cs-blog/others/writing-the-first-post</id><content type="html" xml:base="https://sendoru.github.io/cs-blog/others/writing-the-first-post/"><![CDATA[<head>
+</body>]]></content><author><name>sendol</name><email>sendol39@gmail.com</email></author><category term="Others" /><category term="html" /><category term="css" /><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">Writing The First Post</title><link href="http://localhost:4000/cs-blog/others/writing-the-first-post/" rel="alternate" type="text/html" title="Writing The First Post" /><published>2023-10-19T00:00:00+09:00</published><updated>2023-10-19T00:00:00+09:00</updated><id>http://localhost:4000/cs-blog/others/writing-the-first-post</id><content type="html" xml:base="http://localhost:4000/cs-blog/others/writing-the-first-post/"><![CDATA[<head>
     <script type="text/x-mathjax-config">
 
     MathJax.Hub.Config({

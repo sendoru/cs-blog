@@ -1,1 +1,1 @@
-Sitemap: https://sendoru.github.io/cs-blog/sitemap.xml
+Sitemap: http://localhost:4000/cs-blog/sitemap.xml
