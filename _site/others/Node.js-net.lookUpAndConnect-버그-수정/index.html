@@ -339,79 +339,82 @@
         <p>일단 저번에 가상환경 밖에서 돌렸을 때 에러가 떴던 테스트의 에러 메세지부터 살펴보자.</p>
 
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">node/test/parallel/test-net-socket-connect-without-cb.js</code>
-```
-=== release test-net-socket-connect-without-cb ===                          <br />
-Path: parallel/test-net-socket-connect-without-cb
-node:events:498
-    throw er; // Unhandled ‘error’ event의
-    ^</li>
+  <li><code class="language-plaintext highlighter-rouge">node/test/parallel/test-net-socket-connect-without-cb.js</code></li>
 </ul>
 
-<p>Error: getaddrinfo ENOTFOUND localhost
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>=== release test-net-socket-connect-without-cb ===                            
+Path: parallel/test-net-socket-connect-without-cb
+node:events:498
+      throw er; // Unhandled 'error' event의
+      ^
+
+Error: getaddrinfo ENOTFOUND localhost
     at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:109:26)
-Emitted ‘error’ event on Socket instance at:
+Emitted 'error' event on Socket instance at:
     at emitErrorNT (node:internal/streams/destroy:170:8)
     at emitErrorCloseNT (node:internal/streams/destroy:129:3)
     at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
   errno: -3007,
-  code: ‘ENOTFOUND’,
-  syscall: ‘getaddrinfo’,
-  hostname: ‘localhost’
-}</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-* `node/test/parallel/test-tcp-wrap-listen.js`
+  code: 'ENOTFOUND',
+  syscall: 'getaddrinfo',
+  hostname: 'localhost'
+}
 </code></pre></div></div>
-<p>=== release test-tcp-wrap-listen ===                                        <br />
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">node/test/parallel/test-tcp-wrap-listen.js</code></li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>=== release test-tcp-wrap-listen ===                                          
 Path: parallel/test-tcp-wrap-listen
 (node:377826) internal/test/binding: These APIs are for internal testing only. Do not use them.
-(Use <code class="language-plaintext highlighter-rouge">node --trace-warnings ...</code> to show where the warning was created)
+(Use `node --trace-warnings ...` to show where the warning was created)
 node:events:498
-      throw er; // Unhandled ‘error’ event
-      ^</p>
+      throw er; // Unhandled 'error' event
+      ^
 
-<p>Error: getaddrinfo ENOTFOUND localhost
+Error: getaddrinfo ENOTFOUND localhost
     at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:109:26)
-Emitted ‘error’ event on Socket instance at:
+Emitted 'error' event on Socket instance at:
     at emitErrorNT (node:internal/streams/destroy:170:8)
     at emitErrorCloseNT (node:internal/streams/destroy:129:3)
     at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
   errno: -3007,
-  code: ‘ENOTFOUND’,
-  syscall: ‘getaddrinfo’,
-  hostname: ‘localhost’
-}</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-`localhost`에 연결을 시도하고 있는 것 같다. `node/test/parallel/test-net-socket-connect-without-cb.js` 코드에 로그를 찍어서 `client.connect` 함수에 뭔 인자가 넘어가는지 한 번 보자.
+  code: 'ENOTFOUND',
+  syscall: 'getaddrinfo',
+  hostname: 'localhost'
+}
+</code></pre></div></div>
 
-```js
-'use strict';
-const common = require('../common');
+<p><code class="language-plaintext highlighter-rouge">localhost</code>에 연결을 시도하고 있는 것 같다. <code class="language-plaintext highlighter-rouge">node/test/parallel/test-net-socket-connect-without-cb.js</code> 코드에 로그를 찍어서 <code class="language-plaintext highlighter-rouge">client.connect</code> 함수에 뭔 인자가 넘어가는지 한 번 보자.</p>
 
-// This test ensures that socket.connect can be called without callback
-// which is optional.
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="dl">'</span><span class="s1">use strict</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">common</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">../common</span><span class="dl">'</span><span class="p">);</span>
 
-const net = require('net');
+<span class="c1">// This test ensures that socket.connect can be called without callback</span>
+<span class="c1">// which is optional.</span>
 
-const server = net.createServer(common.mustCall(function(conn) {
-  conn.end();
-  server.close();
-})).listen(0, common.mustCall(function() {
-  const client = new net.Socket();
+<span class="kd">const</span> <span class="nx">net</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">net</span><span class="dl">'</span><span class="p">);</span>
 
-  client.on('connect', common.mustCall(function() {
-    client.end();
-  }));
+<span class="kd">const</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">net</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="nx">common</span><span class="p">.</span><span class="nx">mustCall</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">conn</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">conn</span><span class="p">.</span><span class="nx">end</span><span class="p">();</span>
+  <span class="nx">server</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+<span class="p">})).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">common</span><span class="p">.</span><span class="nx">mustCall</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">net</span><span class="p">.</span><span class="nx">Socket</span><span class="p">();</span>
 
-  const address = server.address();
-  if (!common.hasIPv6 &amp;&amp; address.family === 'IPv6') {
-    // Necessary to pass CI running inside containers.
-    client.connect(address.port);
-  } else {
-    console.log(address);      // added
-    client.connect(address);
-  }
-}));
+  <span class="nx">client</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">connect</span><span class="dl">'</span><span class="p">,</span> <span class="nx">common</span><span class="p">.</span><span class="nx">mustCall</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">client</span><span class="p">.</span><span class="nx">end</span><span class="p">();</span>
+  <span class="p">}));</span>
+
+  <span class="kd">const</span> <span class="nx">address</span> <span class="o">=</span> <span class="nx">server</span><span class="p">.</span><span class="nx">address</span><span class="p">();</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">common</span><span class="p">.</span><span class="nx">hasIPv6</span> <span class="o">&amp;&amp;</span> <span class="nx">address</span><span class="p">.</span><span class="nx">family</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">IPv6</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Necessary to pass CI running inside containers.</span>
+    <span class="nx">client</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">address</span><span class="p">.</span><span class="nx">port</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">address</span><span class="p">);</span>      <span class="c1">// added</span>
+    <span class="nx">client</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">address</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}));</span>
 </code></pre></div></div>
 
 <p>Output</p>
