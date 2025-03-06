@@ -1,4 +1,183 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/cs-blog/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/cs-blog/" rel="alternate" type="text/html" /><updated>2024-10-06T14:09:38+09:00</updated><id>http://localhost:4000/cs-blog/feed.xml</id><title type="html">sendol’s CS &amp;amp; Dev. Blog</title><subtitle>sendol&apos;s CS &amp; Dev. Blog</subtitle><author><name>sendol</name><email>sendol39@gmail.com</email></author><entry><title type="html">Node.js + V8</title><link href="http://localhost:4000/cs-blog/others/Node.js-+-V8/" rel="alternate" type="text/html" title="Node.js + V8" /><published>2024-10-06T00:00:00+09:00</published><updated>2024-10-06T00:00:00+09:00</updated><id>http://localhost:4000/cs-blog/others/Node.js-+-V8</id><content type="html" xml:base="http://localhost:4000/cs-blog/others/Node.js-+-V8/"><![CDATA[<p>Node.js repo의 <code class="language-plaintext highlighter-rouge">./src</code> 디렉토리에 가 보면, 시스템 콜 사용 같은 저레벨 작업이나 퍼포먼스 향상을 위해 C++로 작성된 코드가 보일 것이다. 그리고 이 코드들을 까 보면 <code class="language-plaintext highlighter-rouge">v8</code> 네임스페이스의 뭔가로 가득 차 있어 C++만 잘 한다고 코드를 이해하기가 쉽지 않다. 이 글에서는 V8이 무엇인지, Node.js와 어떤 관계가 있는지, 그리고 Node.js의 C++ 코드를 이해하는데 도움이 되는 V8의 핵심 개념들을 살펴보겠다.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/cs-blog/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/cs-blog/" rel="alternate" type="text/html" /><updated>2025-03-07T01:29:08+09:00</updated><id>http://localhost:4000/cs-blog/feed.xml</id><title type="html">sendol’s CS &amp;amp; Dev. Blog</title><subtitle>sendol&apos;s CS &amp; Dev. Blog</subtitle><author><name>sendol</name><email>sendol39@gmail.com</email></author><entry><title type="html">Jekyll Github 블로그에 Latex 수식 사용</title><link href="http://localhost:4000/cs-blog/others/Jekyll-Github-%EB%B8%94%EB%A1%9C%EA%B7%B8%EC%97%90-LaTeX-%EC%88%98%EC%8B%9D-%EC%82%AC%EC%9A%A9/" rel="alternate" type="text/html" title="Jekyll Github 블로그에 Latex 수식 사용" /><published>2025-03-07T00:00:00+09:00</published><updated>2025-03-07T00:00:00+09:00</updated><id>http://localhost:4000/cs-blog/others/Jekyll-Github-%EB%B8%94%EB%A1%9C%EA%B7%B8%EC%97%90-LaTeX-%EC%88%98%EC%8B%9D-%EC%82%AC%EC%9A%A9</id><content type="html" xml:base="http://localhost:4000/cs-blog/others/Jekyll-Github-%EB%B8%94%EB%A1%9C%EA%B7%B8%EC%97%90-LaTeX-%EC%88%98%EC%8B%9D-%EC%82%AC%EC%9A%A9/"><![CDATA[<p>이 글에서는 <a href="https://github.com/mathjax/MathJax">Mathjax</a>를 이용해 Jekyll 블로그에 LaTex 문법을 이용한 수식을 넣는 법을 알아본다.</p>
+
+<h2 id="마크다운-엔진-변경">마크다운 엔진 변경</h2>
+
+<p><code class="language-plaintext highlighter-rouge">_config.yml</code>에서 <code class="language-plaintext highlighter-rouge"># Conversion</code>으로 시작되는 부분을 다음과 같이 바꾼다. <a href="https://github.com/mmistakes/minimal-mistakes">Minimal Mistakes</a> 등 일부 템플릿에서는 기본으로 적용되어 있다.</p>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Conversion</span>
+<span class="na">markdown</span><span class="pi">:</span> <span class="s">kramdown</span>
+<span class="na">highlighter</span><span class="pi">:</span> <span class="s">rouge</span>
+<span class="na">lsi</span><span class="pi">:</span> <span class="no">false</span>
+<span class="na">excerpt_separator</span><span class="pi">:</span> <span class="s2">"</span><span class="se">\n\n</span><span class="s">"</span>
+<span class="na">incremental</span><span class="pi">:</span> <span class="no">false</span>
+</code></pre></div></div>
+
+<h2 id="모든-문서에-적용할-경우">모든 문서에 적용할 경우</h2>
+
+<p><code class="language-plaintext highlighter-rouge">_includes/head.html</code> 맨 끝에 아래 내용을 붙여넣으면 끝이다.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/x-mathjax-config"</span><span class="nt">&gt;</span>
+  <span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Config</span><span class="p">({</span>
+      <span class="na">TeX</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">equationNumbers</span><span class="p">:</span> <span class="p">{</span>
+          <span class="na">autoNumber</span><span class="p">:</span> <span class="dl">"</span><span class="s2">AMS</span><span class="dl">"</span>
+        <span class="p">}</span>
+      <span class="p">},</span>
+      <span class="na">tex2jax</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">inlineMath</span><span class="p">:</span> <span class="p">[</span> <span class="p">[</span><span class="dl">'</span><span class="s1">$</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">$</span><span class="dl">'</span><span class="p">]</span> <span class="p">],</span>
+      <span class="na">displayMath</span><span class="p">:</span> <span class="p">[</span> <span class="p">[</span><span class="dl">'</span><span class="s1">$$</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">$$</span><span class="dl">'</span><span class="p">],</span> <span class="p">[</span><span class="dl">'</span><span class="se">\\</span><span class="s1">[</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="se">\\</span><span class="s1">]</span><span class="dl">'</span><span class="p">]</span> <span class="p">],</span>
+      <span class="na">processEscapes</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;script
+  </span><span class="na">type=</span><span class="s">"text/javascript"</span>
+  <span class="na">async</span>
+  <span class="na">src=</span><span class="s">"https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"</span>
+<span class="nt">&gt;&lt;/script&gt;</span>
+</code></pre></div></div>
+
+<h2 id="특정-문서에만-적용할-경우">특정 문서에만 적용할 경우</h2>
+
+<h3 id="mathjax_supporthtml-생성"><code class="language-plaintext highlighter-rouge">mathjax_support.html</code> 생성</h3>
+
+<p><code class="language-plaintext highlighter-rouge">_include</code> 디렉토리에 <code class="language-plaintext highlighter-rouge">mathjax_support.html</code>를 생성하고 위 섹션에 있는 코드를 그대로 입력한다.</p>
+
+<h3 id="_layoutsdefaulthtml-파일-수정"><code class="language-plaintext highlighter-rouge">_layouts/default.html</code> 파일 수정</h3>
+
+<p><code class="language-plaintext highlighter-rouge">&lt;head&gt;</code>에 아래 코드를 추가한다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{% if page.use_math %}
+  {% include mathjax_support.html %}
+{% endif %}
+</code></pre></div></div>
+
+<h3 id="yaml-front-matter-설정">YAML front-matter 설정</h3>
+
+<p>LaTeX 문법을 사용할 포스트의 front-matter에 <code class="language-plaintext highlighter-rouge">use_math: true</code>를 적용</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
+<span class="na">Title</span><span class="pi">:</span> <span class="s">2025-03-07-Jekyll-Github-블로그에-LaTeX-수식-사용</span>
+<span class="na">categories</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">Others</span>
+<span class="na">tags</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">Web</span>
+  <span class="pi">-</span> <span class="s">Blog</span>
+  <span class="pi">-</span> <span class="s">Jekyll</span>
+<span class="na">toc</span><span class="pi">:</span> <span class="no">true</span>
+<span class="na">use_math</span><span class="pi">:</span> <span class="no">true</span>
+<span class="nn">---</span>
+</code></pre></div></div>
+
+<h2 id="mathjax-수식-예시">MathJax 수식 예시</h2>
+
+<h3 id="인라인-수식">인라인 수식</h3>
+
+<div class="language-latex highlighter-rouge"><div class="highlight"><pre class="highlight"><code>오일러 공식: <span class="p">$</span><span class="nb">e</span><span class="p">^{</span><span class="nb">ix</span><span class="p">}</span><span class="nb"> </span><span class="o">=</span><span class="nb"> </span><span class="nv">\cos</span><span class="o">(</span><span class="nb">x</span><span class="o">)</span><span class="nb"> </span><span class="o">+</span><span class="nb"> i</span><span class="nv">\sin</span><span class="o">(</span><span class="nb">x</span><span class="o">)</span><span class="p">$</span>
+</code></pre></div></div>
+
+<p>오일러 공식: $e^{ix} = \cos(x) + i\sin(x)$</p>
+
+<h3 id="블록-수식">블록 수식</h3>
+
+<div class="language-latex highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">$$</span><span class="nb">
+K</span><span class="o">(</span><span class="nb">a,b</span><span class="o">)</span><span class="nb"> </span><span class="o">=</span><span class="nb"> </span><span class="nv">\int</span><span class="nb"> </span><span class="nv">\mathcal</span><span class="p">{</span><span class="nb">D</span><span class="p">}</span><span class="nb">x</span><span class="o">(</span><span class="nb">t</span><span class="o">)</span><span class="nb"> </span><span class="nv">\exp</span><span class="o">(</span><span class="m">2</span><span class="nv">\pi</span><span class="nb"> i S</span><span class="o">[</span><span class="nb">x</span><span class="o">]/</span><span class="nv">\hbar</span><span class="o">)</span><span class="nb">
+</span><span class="p">$$</span>
+</code></pre></div></div>
+
+\[K(a,b) = \int \mathcal{D}x(t) \exp(2\pi i S[x]/\hbar)\]
+
+<hr />
+
+<h2 id="references">References</h2>
+<ul>
+  <li><a href="https://mkkim85.github.io/blog-apply-mathjax-to-jekyll-and-github-pages/">Jekyll Github 블로그에 MathJax로 수학식 표시하기</a></li>
+  <li><a href="http://benlansdell.github.io/computing/mathjax/">MathJax, Jekyll and github pages</a></li>
+</ul>]]></content><author><name>sendol</name><email>sendol39@gmail.com</email></author><category term="Others" /><category term="Web" /><category term="Blog" /><category term="Jekyll" /><summary type="html"><![CDATA[이 글에서는 Mathjax를 이용해 Jekyll 블로그에 LaTex 문법을 이용한 수식을 넣는 법을 알아본다.]]></summary></entry><entry><title type="html">Tree Dp 시간복잡도 분석</title><link href="http://localhost:4000/cs-blog/algorithm/Tree-DP-%EC%8B%9C%EA%B0%84%EB%B3%B5%EC%9E%A1%EB%8F%84-%EB%B6%84%EC%84%9D/" rel="alternate" type="text/html" title="Tree Dp 시간복잡도 분석" /><published>2025-03-06T00:00:00+09:00</published><updated>2025-03-06T00:00:00+09:00</updated><id>http://localhost:4000/cs-blog/algorithm/Tree-DP-%EC%8B%9C%EA%B0%84%EB%B3%B5%EC%9E%A1%EB%8F%84-%EB%B6%84%EC%84%9D</id><content type="html" xml:base="http://localhost:4000/cs-blog/algorithm/Tree-DP-%EC%8B%9C%EA%B0%84%EB%B3%B5%EC%9E%A1%EB%8F%84-%EB%B6%84%EC%84%9D/"><![CDATA[<p>Tree DP를 DFS를 이용해 구현할 때, 실제 시간복잡도는 코드를 보고 대충 생각한 것보다 작은 경우가 많다. 이 글에서는 그런 몇몇 케이스를 다룬다.</p>
+
+<h2 id="자식-노드의-결과를-합칠-때-자식-서브트리-크기에-대한-다항식-시간이-걸릴-경우">자식 노드의 결과를 합칠 때 자식 서브트리 크기에 대한 다항식 시간이 걸릴 경우</h2>
+
+<p>보통 Tree DP는 다음과 비슷한 함수를 만들고 루트 노드를 함수 인자로 넘겨 실행하면 풀 수 있다.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">dfs</span><span class="p">(</span><span class="kt">int</span> <span class="n">node</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">(</span><span class="n">dp_table</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="err">초기화</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">next</span> <span class="o">:</span> <span class="n">children</span><span class="p">[</span><span class="n">node</span><span class="p">])</span> <span class="p">{</span>
+        <span class="n">dfs</span><span class="p">(</span><span class="n">next</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="p">(</span><span class="n">dp_table</span><span class="p">[</span><span class="n">next</span><span class="p">]</span><span class="err">들의</span> <span class="err">값을</span> <span class="err">이용해</span> <span class="n">dp_table</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="err">계산</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="n">dfs</span><span class="p">(</span><span class="n">root_node</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>노드 갯수가 $N$개인 트리에서 노드 $n$의 자식이 $k_n$개 있고, 이 자식들을 루트로 하는 $k$개의 서브트리의 크기가 각각 $|s^n_1|$, $|s^n_2|$, … , $|s^n_{k_n}|$라 해 보자. <br />
+함수 마지막에서 자식 노드의 결과를 합치는데, 이 과정의 시간복잡도가 $|s^n_i| (1 \leq i \leq k_n)$에 대한 이차식이 되는 경우를 생각해보자. <br />
+최악의 경우 각 노드에 대해 각 $|s_i|$가 $O(N)$, 노드를 합치는 횟수가 $O(N)$이므로 <code class="language-plaintext highlighter-rouge">dfs(root_node)</code>의 시간복잡도는 $O(N^3)$이 될 것 같지만, 실제로는 $O(N^2)$가 된다.</p>
+
+<p>$n$이 루트인 서브트리의 크기를 $|n|$, 이 노드의 결과를 구하는 시간을 $T(n)$이라 해 보자. <br />
+또한 자식 노드들의 결과를 합치는 시간복잡도가 $O(이차식)$이라는 것은, 자식 노드 $s^n_1$, $s^n_2$, … 의 결과를 합치는 데 $\sum_{1 \leq i \leq j \leq k_n} c |s^n_i| |s^n_j|$ ($c$는 상수) 이하의 시간이 걸린다는 뜻이다.<br /></p>
+
+<p>$n$의 자식들 $s^n_i$에 대해 $T(s^n_i) \leq d|s^n_i|^2 = O(|s^n_i|^2)$ ($d는 상수) 라고 가정해 보자. 그러면,</p>
+
+\[\begin{split}
+&amp;T(n) \\
+&amp;= \sum_{1 \leq i \leq j \leq k_n} c \|s^n_i\| \|s^n_j\| + \sum_{1 \leq i \leq k_n} T(s^n_i) \\
+&amp;\leq \sum_{1 \leq i \leq j \leq k_n} c \|s^n_i\| \|s^n_j\| + \sum_{1 \leq i \leq k_n} d\|s^n_i\|^2 \\
+&amp;= \sum_{1 \leq i \lt j \leq k_n} c\|s^n_i\| \|s^n_j\| + \sum_{1 \leq i \leq k_n} (c+d)\|s^n_i\|^2 \\
+&amp;\leq \sum_{1 \leq i \lt j \leq k_n} 2e \|s^n_i\| \|s^n_j\| + \sum_{1 \leq i \leq k_n} e\|s^n_i\|^2 \quad \quad ({e &gt; c + d}) \\
+&amp;= e \left( \sum_{1 \leq i \leq k_n} \|s^n_i\| \right) ^ 2 \\
+&amp;= e (\|n\|- 1)^2 = O(\|n\|^2)
+\end{split}\]
+
+<p>가 되어 노드 $n$에 대해서도 $T(n) = O(|n|^2)$가 성립한다.</p>
+
+<p>또한 base case인 리프 노드에 대해서는 $T(|n|) = O(1) &lt; O(|n|^2)$ 이므로, 수학적 귀납법에 의해 전체 문제를 $O(N)$ 시간에 풀 수 있다.</p>
+
+<p>저걸 잘 일반화하면, 자식 노드의 결과를 합치는 시간복잡도가 $|s^n_1|$, $|s^n_2|$, … , $|s^n_{k_n}|$ 에 대한 $p$차식이면, 전체 문제를 $O(N^p)$ 시간에 풀 수 있다는 것도 알 수 있다.</p>
+
+<h2 id="자식-노드를-합칠-때-자식-노드의-갯수에-대한-다항식-시간이-걸릴-경우">자식 노드를 합칠 때 자식 노드의 갯수에 대한 다항식 시간이 걸릴 경우</h2>
+
+<p>대충 이런 경우를 생각해보자.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">dfs</span><span class="p">(</span><span class="kt">int</span> <span class="n">node</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">(</span><span class="n">dp_table</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="err">초기화</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">next</span> <span class="o">:</span> <span class="n">children</span><span class="p">[</span><span class="n">node</span><span class="p">])</span> <span class="p">{</span>
+        <span class="n">dfs</span><span class="p">(</span><span class="n">next</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">next1</span> <span class="o">:</span> <span class="n">children</span><span class="p">[</span><span class="n">node</span><span class="p">])</span> <span class="p">{</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">next2</span> <span class="o">:</span> <span class="n">children</span><span class="p">[</span><span class="n">node</span><span class="p">])</span> <span class="p">{</span>
+            <span class="n">dp_table</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="n">foo</span><span class="p">(</span><span class="n">dp_table</span><span class="p">[</span><span class="n">next1</span><span class="p">],</span> <span class="n">dp_table</span><span class="p">[</span><span class="n">next2</span><span class="p">]);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">dfs</span><span class="p">(</span><span class="n">root_node</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>이때 함수 <code class="language-plaintext highlighter-rouge">foo</code>는 <code class="language-plaintext highlighter-rouge">O(1)</code> 시간에 실행된다고 하자.</p>
+
+<p>이것도 대충 보면 위와 비슷한 이유로 $O(N^3)$ 시간이 걸릴 것 같다. 하지만 이것도 $O(N^2)$다.</p>
+
+<p>위와 마찬가지로, $n$이 루트인 서브트리의 크기를 $|n|$, 이 노드의 자식 노드의 갯수를 $k_n$, 이 노드의 결과를 구하는 시간을 $T(n)$이라 해 보자. <br />
+자식 노드들의 결과를 합치는 시간복잡도는 $O({k_n}^2)$, 즉 $c{k_n}^2$ 이하이다 ($c$는 상수).</p>
+
+<p>임의의 노드 $n$의 자식들 $s^n_i$에 대해 $T(s^n_i) \leq d|s^n_i|^2 = O(|s^n_i|^2)$ ($d는 상수) 라고 가정해 보자. 그러면,</p>
+
+\[\begin{split}
+&amp;T(n) \\
+&amp;= c{k_n}^2 + \sum_{1 \leq i \leq k_n} T(s^n_i) \\
+&amp;\leq c{k_n}^2 + \sum_{1 \leq i \leq k_n} d\|s^n_i\|^2 \\
+&amp;= c \left( \sum_{1 \leq i \leq k_n} 1 \right) ^ 2+\sum_{1 \leq i \leq k_n} d\|s^n_i\|^2 \\
+&amp;\leq c \left( \sum_{1 \leq i \leq k_n} \|s^n_i\| \right) ^ 2+\sum_{1 \leq i \leq k_n} d\|s^n_i\|^2 \\
+&amp;\leq e \left( \sum_{1 \leq i \leq k_n} \|s^n_i\| \right) ^ 2+\sum_{1 \leq i \leq k_n} e\|s^n_i\|^2 \quad \quad ({e &gt; c + d}) \\
+&amp;\leq 2e \left( \sum_{1 \leq i \leq k_n} \|s^n_i\| \right) ^ 2 \\
+&amp;= 2e (\|n\|- 1)^2 = O(\|n\|^2)
+\end{split}\]
+
+<p>가 되어 위와 마찬가지로 수학적 귀납법에 의해 전체 문제를 $O(N^2)$에 해결할 수 있다. 이것도 자식 노드들의 결과를 합치는 시간복잡도는 $O({k_n}^p)$일 때 전체 문제를 $O(N^p)$에 해결할 수 있다고 일반화할 수 있다.</p>
+
+<hr />
+
+<h2 id="references">References</h2>
+<p><a href="https://cubelover.tistory.com/31">cubelover의 블로그 - Tree Optimization</a></p>]]></content><author><name>sendol</name><email>sendol39@gmail.com</email></author><category term="Algorithm" /><category term="Algorithm-Hard" /><category term="DP" /><category term="Tree" /><summary type="html"><![CDATA[Tree DP를 DFS를 이용해 구현할 때, 실제 시간복잡도는 코드를 보고 대충 생각한 것보다 작은 경우가 많다. 이 글에서는 그런 몇몇 케이스를 다룬다.]]></summary></entry><entry><title type="html">Node.js + V8</title><link href="http://localhost:4000/cs-blog/others/Node.js-+-V8/" rel="alternate" type="text/html" title="Node.js + V8" /><published>2024-10-06T00:00:00+09:00</published><updated>2024-10-06T00:00:00+09:00</updated><id>http://localhost:4000/cs-blog/others/Node.js-+-V8</id><content type="html" xml:base="http://localhost:4000/cs-blog/others/Node.js-+-V8/"><![CDATA[<p>Node.js repo의 <code class="language-plaintext highlighter-rouge">./src</code> 디렉토리에 가 보면, 시스템 콜 사용 같은 저레벨 작업이나 퍼포먼스 향상을 위해 C++로 작성된 코드가 보일 것이다. 그리고 이 코드들을 까 보면 <code class="language-plaintext highlighter-rouge">v8</code> 네임스페이스의 뭔가로 가득 차 있어 C++만 잘 한다고 코드를 이해하기가 쉽지 않다. 이 글에서는 V8이 무엇인지, Node.js와 어떤 관계가 있는지, 그리고 Node.js의 C++ 코드를 이해하는데 도움이 되는 V8의 핵심 개념들을 살펴보겠다.</p>
 
 <h2 id="v8이란-무엇인가">V8이란 무엇인가?</h2>
 
