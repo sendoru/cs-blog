@@ -432,7 +432,7 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
 
 <p>위 그림과 같이 두 선분 $\overline{P_0 P_1}$과 $\overline{Q_0 Q_1}$이 주어졌을 때 그 교점 $R$이 존재하는지, 존재한다면 어떤 점인지 구할 방법을 생각해보자. 이는 벡터 $\overrightarrow{R}$이 만족하는 방정식을 써서, 그 식을 만족하는 변수가 존재하는지 확인하고 존재한다면 그 값을 구하는 것으로 수행할 수 있다.</p>
 
-<p>[여기에 그림 입력]</p>
+<center><img src="/cs-blog/assets/images/2025-03-10-벡터로-두-선분의-교점-구하기/fig1.png" alt="" style="border: 5px solid #555; text-align: center; margin: 10px; max-width: 600px;" /></center>
 
 <p>교점 $R$이 존재한다면 다음 두 식을 동시에 만족시키는 실수 $s$와 $t$가 존재한다.</p>
 
@@ -499,11 +499,11 @@ t = \frac{
 
 <p>마지막으로 네 점이 한 직선 위에 있는 경우만 남았다.</p>
 
-<p>[여기에 그림 입력]</p>
+<center><img src="/cs-blog/assets/images/2025-03-10-벡터로-두-선분의-교점-구하기/fig2.png" alt="" style="border: 5px solid #555; text-align: center; margin: 10px; max-width: 600px;" /></center>
 
 <p>$A_0 = \min(P_0, P_1)$, $A_1 = \max(P_0, P_1)$, $B_0 = \min(Q_0, Q_1)$, $B_1 = \max(Q_0, Q_1)$로 두자.. 이때 점의 비교 기준은 우선 $x$좌표가 작은 것이 더 작은 점이고, $x$좌표가 같다면 $y$좌표가 작은 것이 더 작은 점이다. 이렇게 하면 $\overrightarrow{A_0 A_1}$과 $\overrightarrow{B_0 B_1}$의 방향이 같아진다.</p>
 
-<p>[여기에 그림 입력]</p>
+<center><img src="/cs-blog/assets/images/2025-03-10-벡터로-두-선분의-교점-구하기/fig3.png" alt="" style="border: 5px solid #555; text-align: center; margin: 10px; max-width: 600px;" /></center>
 
 <p>그런 다음, $L = \max(A_0, B_0)$, $R = \min(A_1, B_1)$이라고 하자. $L \leq R$이면 두 선분이 겹치는 것이고, $L = R$이면 교점이 $L$이고, $L &gt; R$이면 교점이 없다.</p>
 
