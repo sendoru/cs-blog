@@ -1,0 +1,955 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+
+<head>
+  <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>벡터로 두 선분의 교점 구하기 - sendol’s CS &amp; Dev. Blog</title>
+<meta name="description" content="애드혹과 케이스 워크 노가다를 통한 선분 교차 판정은 좀 더럽다. 벡터를 사용해서 케이스를 좀 더 깔끔하게 분류해 선분의 교점을 구해보자.">
+
+
+  <meta name="author" content="sendol">
+  
+  <meta property="article:author" content="sendol">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="sendol's CS & Dev. Blog">
+<meta property="og:title" content="벡터로 두 선분의 교점 구하기">
+<meta property="og:url" content="http://localhost:4000/cs-blog/algorithm/%EB%B2%A1%ED%84%B0%EB%A1%9C-%EB%91%90-%EC%84%A0%EB%B6%84%EC%9D%98-%EA%B5%90%EC%A0%90-%EA%B5%AC%ED%95%98%EA%B8%B0/">
+
+
+  <meta property="og:description" content="애드혹과 케이스 워크 노가다를 통한 선분 교차 판정은 좀 더럽다. 벡터를 사용해서 케이스를 좀 더 깔끔하게 분류해 선분의 교점을 구해보자.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2025-03-10T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/cs-blog/algorithm/%EB%B2%A1%ED%84%B0%EB%A1%9C-%EB%91%90-%EC%84%A0%EB%B6%84%EC%9D%98-%EA%B5%90%EC%A0%90-%EA%B5%AC%ED%95%98%EA%B8%B0/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "sendol",
+      "url": "http://localhost:4000/cs-blog/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+<link href="/cs-blog/feed.xml"
+  type="application/atom+xml" rel="alternate" title="sendol's CS & Dev. Blog Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/cs-blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style"
+  onload="this.onload=null;this.rel='stylesheet'">
+<noscript>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+</noscript>
+
+
+<!-- darkmode css -->
+
+<link rel="stylesheet" href="/cs-blog/assets/css/main_dark.css">
+
+
+
+  <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  
+  <!-- Latex -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    },
+    tex2jax: {
+    inlineMath: [ ['$', '$'] ],
+    displayMath: [ ['$$', '$$'], ["\\[", "\\]"] ],
+    processEscapes: true,
+  }
+});
+MathJax.Hub.Register.MessageHook("Math Processing Error",function (message) {
+	  alert("Math Processing Error: "+message[1]);
+	});
+MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
+	  alert("Math Processing Error: "+message[1]);
+	});
+</script>
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+  
+</head>
+
+<body
+  class="layout--single">
+  <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+  
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/cs-blog/">
+          sendol's CS & Dev. Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/cs-blog/portfolio/">About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/cs-blog/year-archive/">Posts (by Year)</a>
+            </li><li class="masthead__menu-item">
+              <a href="/cs-blog/tags/">Posts (by Tag)</a>
+            </li><li class="masthead__menu-item">
+              <a href="/cs-blog/categories/">Posts (by Category)</a>
+            </li></ul>
+        <!-- 다크 모드 토글 버튼 -->
+        
+        <input id="toggle_dark_theme" class="mh_toogle" type="checkbox">
+        <label for="toggle_dark_theme" class="material-icons-sharp mh_toggle_btn" style="margin: 0px"></label>
+        
+
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+    
+  </div>
+</div>
+
+
+
+  <div class="initial-content">
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/cs-blog/" itemprop="url">sendol</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>I am an <strong>amazing</strong> person.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">South Korea</span>
+        </li>
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/sendoru" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:sendol39@gmail.com" rel="me" class="u-email">
+            <meta itemprop="email" content="sendol39@gmail.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="벡터로 두 선분의 교점 구하기">
+    <meta itemprop="description" content="애드혹과 케이스 워크 노가다를 통한 선분 교차 판정은 좀 더럽다. 벡터를 사용해서 케이스를 좀 더 깔끔하게 분류해 선분의 교점을 구해보자.">
+    <meta itemprop="datePublished" content="2025-03-10T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/cs-blog/algorithm/%EB%B2%A1%ED%84%B0%EB%A1%9C-%EB%91%90-%EC%84%A0%EB%B6%84%EC%9D%98-%EA%B5%90%EC%A0%90-%EA%B5%AC%ED%95%98%EA%B8%B0/" class="u-url" itemprop="url">벡터로 두 선분의 교점 구하기
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-03-10T00:00:00+09:00">March 10, 2025</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#요약">요약</a></li><li><a href="#배경-지식">배경 지식</a></li><li><a href="#알고리즘-구성">알고리즘 구성</a><ul><li><a href="#overrightarrowp_0-p_1-times-overrightarrowq_0-q_1-neq-0인-경우">$\overrightarrow{P_0 P_1} \times \overrightarrow{Q_0 Q_1} \neq 0$인 경우</a></li><li><a href="#그-외의-경우">그 외의 경우</a></li></ul></li><li><a href="#오버플로-주의">오버플로 주의</a></li><li><a href="#구현">구현</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p>애드혹과 케이스 워크 노가다를 통한 선분 교차 판정은 좀 더럽다. 벡터를 사용해서 케이스를 좀 더 깔끔하게 분류해 선분의 교점을 구해보자.</p>
+
+<ul>
+  <li>이 글에서는 편의상 원점과 점 $A$를 잇는 벡터 $\overrightarrow{OA}$를 $\overrightarrow{A}$로 표현한다.</li>
+</ul>
+
+<h2 id="요약">요약</h2>
+
+<p>원리는 필요 없고 알고리즘만 갖다 쓸 거라면 이걸 그대로 구현하면 된다. 맨 아래에 실제로 작동하는 코드도 있다.</p>
+
+<ul>
+  <li>입력 - 두 선분 $\overline{P_0 P_1}$과 $\overline{Q_0 Q_1}$</li>
+  <li>출력 - 두 선분의 교점이 있으면 그 교점을, 두 선분이 한 선분으로 겹치면 그 선분을 반환하며, 두 선분이 만나지 않으면 만나지 않는다고 판단한다.</li>
+</ul>
+
+<ol>
+  <li>$u \leftarrow (\overrightarrow{P_0 P_1} \times \overrightarrow{Q_0 Q_1})$</li>
+  <li>$u \ne 0$이라면,
+    <ol>
+      <li>$s \leftarrow (\overrightarrow{P_0 Q_0} \times \overrightarrow{Q_0 Q_1}) / u \qquad t \leftarrow (\overrightarrow{P_0 Q_0} \times \overrightarrow{P_0 P_1}) / u$</li>
+      <li>$0 \le s \le 1$이고 $0 \le t \le 1$이면 두 선분은 $\overrightarrow{OP_0} + s\overrightarrow{P_0P_1}$에서 교차한다. 그렇지 않으면 교점이 없다.</li>
+    </ol>
+  </li>
+  <li>그렇지 않다면,
+    <ol>
+      <li>$\overrightarrow{P_0 Q_0} \times \overrightarrow{Q_0 Q_1} = 0$, $\overrightarrow{P_0 Q_0} \times \overrightarrow{P_0 P_1} = 0$ 중 하나라도 거짓이면 교점이 없다.</li>
+      <li>$A_0, \ A_1 \leftarrow \min(P_0, \ P_1), \ \max(P_0, \ P_1) \ B_0, \ B_1 \leftarrow \min(Q_0, \ Q_1), \ \max(Q_0, \ Q_1)$</li>
+      <li>$L \leftarrow \max(A_0, \ B_0) \ R \leftarrow \min(A_1, \ B_1)$</li>
+      <li>$L &lt; R$이면 선분 $LR$에서 겹치고, $L = R$이면 $L$이 교점이고, $L &gt; R$이면 교점이 없다. 이 대소비교는 좌표를 튜플로 두고 통째로 비교하는 것이다.</li>
+    </ol>
+  </li>
+</ol>
+
+<h2 id="배경-지식">배경 지식</h2>
+
+<p>혹시 벡터에 대해 잘 모르는 상황이라면 <a href="https://zigui.tistory.com/34">이 글</a>을 읽고 오는 것을 추천한다. 고등학교 기하 수준의 배경 지식이 있다면 굳이 안 봐도 되긴 하는데, 선분 교차 판정뿐만 아니라 계산 기하 분야에서 자주 등장하는 알고리즘을 종합적으로 설명하고 있어서 한 번 보면 좋다.</p>
+
+<p>두 벡터를 곱하는 방법 중 하나로 외적(cross product)가 있다. 두 평면벡터의 외적은 그냥 수 하나가 나오고, 다음과 같이 정의된다.</p>
+
+\[(a_x, a_y) \times (b_x, b_y) = a_x b_y - a_y b_x\]
+
+<p>외적의 성질은 다음과 같다.</p>
+
+<ul>
+  <li>벡터의 덧셈에 대해 결합법칙과 분배법칙을 만족한다.</li>
+  <li>외적하는 두 벡터를 교환하면 부호가 반대가 된다. $(\vec{a} \times \vec{b} = - \vec{b} \times \vec{a})$</li>
+  <li>평행한 두 벡터를 외적하면 $0$이 된다.
+    <ul>
+      <li>두 벡터의 외적이 $0$이 아니면 두 벡터는 평행하지 않다.</li>
+      <li>같은 벡터를 외적하면 $0$이 된다. $(\vec{a} \times \vec{a} = 0)$.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>한편, 두 점 $A$와 $B$를 양 끝점으로 하는 선분 위의 임의의 점 $X$는 다음과 같이 표현할 수 있다.</p>
+
+\[\overrightarrow{X} = \overrightarrow{A} + s\overrightarrow{AB} \quad (0 \le s \le 1)\]
+
+<p>풀어서 설명하면, 원점에서 점 $X$까지 가려면 일단 점 $A$까지 간 다음, 선분 $\overline{AB}$을 따라 이동하면 된다는 것이다. 선분은 점의 집합이기 때문에, 다르게 말하면 저 식이 선분 자체를 벡터로 표현한 것이라고 볼 수도 있다.</p>
+
+<h2 id="알고리즘-구성">알고리즘 구성</h2>
+
+<p>위 그림과 같이 두 선분 $\overline{P_0 P_1}$과 $\overline{Q_0 Q_1}$이 주어졌을 때 그 교점 $R$이 존재하는지, 존재한다면 어떤 점인지 구할 방법을 생각해보자. 이는 벡터 $\overrightarrow{R}$이 만족하는 방정식을 써서, 그 식을 만족하는 변수가 존재하는지 확인하고 존재한다면 그 값을 구하는 것으로 수행할 수 있다.</p>
+
+<p>[여기에 그림 입력]</p>
+
+<p>교점 $R$이 존재한다면 다음 두 식을 동시에 만족시키는 실수 $s$와 $t$가 존재한다.</p>
+
+\[\begin{aligned}
+\overrightarrow{P_0 R} &amp;= s \overrightarrow{P_0 P_1} &amp;\quad (0 \le s \le 1) \\
+\overrightarrow{P_0 R} &amp;= \overrightarrow{P_0 Q_0} + t \overrightarrow{Q_0 Q_1} &amp;\quad (0 \le t \le 1) \\
+\end{aligned}\]
+
+<p>식을 정리하면 다음과 같다.</p>
+
+\[s \overrightarrow{P_0 P_1} = \overrightarrow{P_0 Q_0} + t \overrightarrow{Q_0 Q_1} \quad (0 \le s, \; t \le 1)\]
+
+<p>여기서 외적의 결합법칙과 같은 벡터를 외적하면 0이 된다는 사실을 이용하면 $s$와 $t$ 중 하나의 변수를 없앨 수 있다. 양변에 $\overrightarrow{Q_0 Q_1}$을 외적하면 $t$가 없어지고 다음 식이 나온다.</p>
+
+\[s (\overrightarrow{P_0 P_1} \times \overrightarrow{Q_0 Q_1})
+= (\overrightarrow{P_0 Q_0} \times \overrightarrow{Q_0 Q_1})\]
+
+<p>$\overrightarrow{Q_0 Q_1}$ 대신 $\overrightarrow{P_0 P_1}$을 외적하면 $t$만에 대한 식도 얻을 수 있다.</p>
+
+\[0
+= (\overrightarrow{P_0 Q_0} \times \overrightarrow{P_0 P_1})
++ t (\overrightarrow{Q_0 Q_1} \times \overrightarrow{P_0 P_1})\]
+
+\[-t (\overrightarrow{Q_0 Q_1} \times \overrightarrow{P_0 P_1})
+= t (\overrightarrow{P_0 P_1} \times \overrightarrow{Q_0 Q_1})
+= (\overrightarrow{P_0 Q_0} \times \overrightarrow{P_0 P_1})\]
+
+<p>만약 $\overrightarrow{P_0 P_1} \times \overrightarrow{Q_0 Q_1} \neq 0$이라면 $s$와 $t$를 바로 구할 수 있다. 여기서부터 $\overrightarrow{P_0 P_1} \times \overrightarrow{Q_0 Q_1} \neq 0$인 경우, $\overrightarrow{P_0 P_1} \times \overrightarrow{Q_0 Q_1} = 0$인 경우로 케이스를 나눠서 풀어보자.</p>
+
+<h3 id="overrightarrowp_0-p_1-times-overrightarrowq_0-q_1-neq-0인-경우">$\overrightarrow{P_0 P_1} \times \overrightarrow{Q_0 Q_1} \neq 0$인 경우</h3>
+
+<p>$\overrightarrow{P_0 P_1} \times \overrightarrow{Q_0 Q_1} \neq 0$인 경우는 두 선분 $\overline{P_0 P_1}$과 $\overline{Q_0 Q_1}$이 둘 다 길이가 $0$이 아니고 평행하지 않은 경우다. 이 경우엔 앞서 나온 식으로 $s$와 $t$를 바로 계산할 수 있습니다.</p>
+
+\[s = \frac{
+  \overrightarrow{P_0 Q_0} \times \overrightarrow{Q_0 Q_1}
+} {
+    \overrightarrow{P_0 P_1} \times \overrightarrow{Q_0 Q_1}
+} \qquad
+
+t = \frac{
+  \overrightarrow{P_0 Q_0} \times \overrightarrow{P_0 P_1}
+} {
+  \overrightarrow{P_0 P_1} \times \overrightarrow{Q_0 Q_1}
+}\]
+
+<p>$0 \leq s, \; t \leq 1$이면 교점이 존재하는 것이고, 그렇지 않으면 교점이 없다. 교점의 좌표 $R$은 $\overrightarrow{R} = \overrightarrow{P_0} + s\overrightarrow{P_0 P_1}$로 구할 수 있다.</p>
+
+<h3 id="그-외의-경우">그 외의 경우</h3>
+
+<p>$\overrightarrow{P_0 P_1} \times \overrightarrow{Q_0 Q_1} = 0$인 경우는 두 선분이 평행하거나 길이가 $0$인 경우다. 이 경우엔 두 선분이 겹치는지, 겹치지 않는지를 판단해야 한다.</p>
+
+<p>일단, 네 점이 모두 한 직선 위에 있는지 판단해야 한다. 이는 네 점 $P_0$, $P_1$, $Q_0$, $Q_1$중 세 점을 고르는 모든 경우에 대해 외적이 $0$인지 보면 된다. 즉,</p>
+
+\[\begin{aligned}
+\overrightarrow{P_0 P_1} \times \overrightarrow{P_1 Q_0} &amp;= 0 \\
+\overrightarrow{P_0 P_1} \times \overrightarrow{P_1 Q_1} &amp;= 0 \\
+\overrightarrow{Q_0 Q_1} \times \overrightarrow{Q_1 P_0} &amp;= 0 \\
+\overrightarrow{Q_0 Q_1} \times \overrightarrow{Q_1 P_1} &amp;= 0 \\
+\end{aligned}\]
+
+<p>이 네 등식이 모두 성립하는 지 보면 된다.</p>
+
+<p>위 네 식 중 하나라도 성립하지 않으면 네 점이 한 직선 위에 있지 않은 것인데, 두 선분이 평행하지 않은 경우는 앞에서 이미 걸렀으므로 이때는 반드시 두 선분이 평행하고 만나지 않는 경우다. 따라서 이 때는 교점이 존재하지 않는다.</p>
+
+<p>마지막으로 네 점이 한 직선 위에 있는 경우만 남았다.</p>
+
+<p>[여기에 그림 입력]</p>
+
+<p>$A_0 = \min(P_0, P_1)$, $A_1 = \max(P_0, P_1)$, $B_0 = \min(Q_0, Q_1)$, $B_1 = \max(Q_0, Q_1)$로 두자.. 이때 점의 비교 기준은 우선 $x$좌표가 작은 것이 더 작은 점이고, $x$좌표가 같다면 $y$좌표가 작은 것이 더 작은 점이다. 이렇게 하면 $\overrightarrow{A_0 A_1}$과 $\overrightarrow{B_0 B_1}$의 방향이 같아진다.</p>
+
+<p>[여기에 그림 입력]</p>
+
+<p>그런 다음, $L = \max(A_0, B_0)$, $R = \min(A_1, B_1)$이라고 하자. $L \leq R$이면 두 선분이 겹치는 것이고, $L = R$이면 교점이 $L$이고, $L &gt; R$이면 교점이 없다.</p>
+
+<h2 id="오버플로-주의">오버플로 주의</h2>
+
+<p>내부 계산을 정수형 또는 분수로만 진행한다면 오버플로가 좀 많이 날 수 있다. 점의 좌표 범위가 $10^9$ 이내라면, $s$와 $t$의 분자는 최대 $10^{18}$, 교점의 좌표는 여기에 벡터를 다시 곱하므로 분자가 최대 $10^{27}$까지 늘어난다. 최종 답안이 정확한 분수 형태일 필요가 없다면 적당한 타이밍에 부동소수점으로 바꿔주자. 최종 답안도 분수 형태로 만들고 싶다면 입력값으로 주어지는 좌표의 세제곱까지 처리할 수 있어야 한다. 예를 들어, 입력값의 범위가 <code class="language-plaintext highlighter-rouge">i32</code>라면 마지막에는 <code class="language-plaintext highlighter-rouge">i128</code>로 계산해야 한다.</p>
+
+<p>이런 게 귀찮으면 파이썬 등 BigInt를 지원하는 언어를 쓰자.</p>
+
+<h2 id="구현">구현</h2>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">ll</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="kt">long</span> <span class="kt">double</span> <span class="n">ld</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">pair</span><span class="o">&lt;</span><span class="n">ll</span><span class="p">,</span> <span class="n">ll</span><span class="o">&gt;</span> <span class="n">pll</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">pair</span><span class="o">&lt;</span><span class="n">ld</span><span class="p">,</span> <span class="n">ld</span><span class="o">&gt;</span> <span class="n">pld</span><span class="p">;</span> 
+
+<span class="n">ll</span> <span class="nf">cross</span><span class="p">(</span><span class="n">pll</span> <span class="n">a</span><span class="p">,</span> <span class="n">pll</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">a</span><span class="p">.</span><span class="n">first</span> <span class="o">*</span> <span class="n">b</span><span class="p">.</span><span class="n">second</span> <span class="o">-</span> <span class="n">a</span><span class="p">.</span><span class="n">second</span> <span class="o">*</span> <span class="n">b</span><span class="p">.</span><span class="n">first</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">pll</span> <span class="n">sub</span><span class="p">(</span><span class="n">pll</span> <span class="n">a</span><span class="p">,</span> <span class="n">pll</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span><span class="n">a</span><span class="p">.</span><span class="n">first</span> <span class="o">-</span> <span class="n">b</span><span class="p">.</span><span class="n">first</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">second</span> <span class="o">-</span> <span class="n">b</span><span class="p">.</span><span class="n">second</span><span class="p">};</span>
+<span class="p">}</span>
+
+<span class="c1">// {0, {0, 0}}: no intersection</span>
+<span class="c1">// {1, {x, y}}: intersection at (x, y)</span>
+<span class="c1">// {2, {0, 0}}: two segments are overlapped (infinite intersections)</span>
+<span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">pld</span><span class="o">&gt;</span> <span class="n">intersect</span><span class="p">(</span><span class="n">pll</span> <span class="n">p0</span><span class="p">,</span> <span class="n">pll</span> <span class="n">p1</span><span class="p">,</span> <span class="n">pll</span> <span class="n">q0</span><span class="p">,</span> <span class="n">pll</span> <span class="n">q1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">pll</span> <span class="n">u</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p0</span><span class="p">);</span>
+    <span class="n">pll</span> <span class="n">v</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="n">q1</span><span class="p">,</span> <span class="n">q0</span><span class="p">);</span>
+    <span class="n">ll</span> <span class="n">det</span> <span class="o">=</span> <span class="n">cross</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">det</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">p0</span><span class="p">.</span><span class="n">swap</span><span class="p">(</span><span class="n">p1</span><span class="p">);</span>
+        <span class="n">u</span><span class="p">.</span><span class="n">first</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="n">u</span><span class="p">.</span><span class="n">second</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="n">det</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">det</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">pll</span> <span class="n">w</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">p0</span><span class="p">);</span>
+        <span class="n">ll</span> <span class="n">cross_wu</span> <span class="o">=</span> <span class="n">cross</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">u</span><span class="p">);</span>
+        <span class="n">ll</span> <span class="n">cross_wv</span> <span class="o">=</span> <span class="n">cross</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">cross_wu</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">cross_wu</span> <span class="o">&gt;</span> <span class="n">det</span> <span class="o">||</span> <span class="n">cross_wv</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">cross_wv</span> <span class="o">&gt;</span> <span class="n">det</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">}};</span>
+        <span class="p">}</span>
+        <span class="n">ld</span> <span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="n">ld</span><span class="p">)</span><span class="n">cross_wv</span> <span class="o">/</span> <span class="n">det</span><span class="p">;</span>
+        <span class="n">ld</span> <span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">ld</span><span class="p">)</span><span class="n">cross_wu</span> <span class="o">/</span> <span class="n">det</span><span class="p">;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="p">{</span><span class="n">p0</span><span class="p">.</span><span class="n">first</span> <span class="o">+</span> <span class="n">u</span><span class="p">.</span><span class="n">first</span> <span class="o">*</span> <span class="n">s</span><span class="p">,</span> <span class="n">p0</span><span class="p">.</span><span class="n">second</span> <span class="o">+</span> <span class="n">u</span><span class="p">.</span><span class="n">second</span> <span class="o">*</span> <span class="n">s</span><span class="p">}};</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">cross</span><span class="p">(</span><span class="n">sub</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">p0</span><span class="p">),</span> <span class="n">u</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">cross</span><span class="p">(</span><span class="n">sub</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">p1</span><span class="p">),</span> <span class="n">u</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">cross</span><span class="p">(</span><span class="n">sub</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">q0</span><span class="p">),</span> <span class="n">v</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">cross</span><span class="p">(</span><span class="n">sub</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">q1</span><span class="p">),</span> <span class="n">v</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">}};</span>
+        <span class="p">}</span>
+        <span class="n">pll</span> <span class="n">a0</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">);</span>
+        <span class="n">pll</span> <span class="n">a1</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">);</span>
+        <span class="n">pll</span> <span class="n">b0</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">q1</span><span class="p">);</span>
+        <span class="n">pll</span> <span class="n">b1</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">q1</span><span class="p">);</span>
+        <span class="n">pll</span> <span class="n">l</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">a0</span><span class="p">,</span> <span class="n">b0</span><span class="p">);</span>
+        <span class="n">pll</span> <span class="n">r</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">b1</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">}};</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">==</span> <span class="n">r</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="p">{(</span><span class="n">ld</span><span class="p">)</span><span class="n">l</span><span class="p">.</span><span class="n">first</span><span class="p">,</span> <span class="p">(</span><span class="n">ld</span><span class="p">)</span><span class="n">l</span><span class="p">.</span><span class="n">second</span><span class="p">}};</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">}};</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/cs-blog/tags/#algorithm-normal" class="page__taxonomy-item p-category" rel="tag">Algorithm-Normal</a><span class="sep">, </span>
+    
+      <a href="/cs-blog/tags/#geometry" class="page__taxonomy-item p-category" rel="tag">Geometry</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/cs-blog/categories/#algorithm" class="page__taxonomy-item p-category" rel="tag">Algorithm</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2025-03-10T00:00:00+09:00">March 10, 2025</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%EB%B2%A1%ED%84%B0%EB%A1%9C+%EB%91%90+%EC%84%A0%EB%B6%84%EC%9D%98+%EA%B5%90%EC%A0%90+%EA%B5%AC%ED%95%98%EA%B8%B0%20http%3A%2F%2Flocalhost%3A4000%2Fcs-blog%2Falgorithm%2F%25EB%25B2%25A1%25ED%2584%25B0%25EB%25A1%259C-%25EB%2591%2590-%25EC%2584%25A0%25EB%25B6%2584%25EC%259D%2598-%25EA%25B5%2590%25EC%25A0%2590-%25EA%25B5%25AC%25ED%2595%2598%25EA%25B8%25B0%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fcs-blog%2Falgorithm%2F%25EB%25B2%25A1%25ED%2584%25B0%25EB%25A1%259C-%25EB%2591%2590-%25EC%2584%25A0%25EB%25B6%2584%25EC%259D%2598-%25EA%25B5%2590%25EC%25A0%2590-%25EA%25B5%25AC%25ED%2595%2598%25EA%25B8%25B0%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fcs-blog%2Falgorithm%2F%25EB%25B2%25A1%25ED%2584%25B0%25EB%25A1%259C-%25EB%2591%2590-%25EC%2584%25A0%25EB%25B6%2584%25EC%259D%2598-%25EA%25B5%2590%25EC%25A0%2590-%25EA%25B5%25AC%25ED%2595%2598%25EA%25B8%25B0%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/cs-blog/others/Jekyll-Github-%EB%B8%94%EB%A1%9C%EA%B7%B8%EC%97%90-LaTeX-%EC%88%98%EC%8B%9D-%EC%82%AC%EC%9A%A9/" class="pagination--pager" title="Jekyll Github 블로그에 Latex 수식 사용
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You may also enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/cs-blog/others/Jekyll-Github-%EB%B8%94%EB%A1%9C%EA%B7%B8%EC%97%90-LaTeX-%EC%88%98%EC%8B%9D-%EC%82%AC%EC%9A%A9/" rel="permalink">Jekyll Github 블로그에 Latex 수식 사용
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-03-07T00:00:00+09:00">March 7, 2025</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          1 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">이 글에서는 Mathjax를 이용해 Jekyll 블로그에 LaTex 문법을 이용한 수식을 넣는 법을 알아본다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/cs-blog/algorithm/Tree-DP-%EC%8B%9C%EA%B0%84%EB%B3%B5%EC%9E%A1%EB%8F%84-%EB%B6%84%EC%84%9D/" rel="permalink">Tree Dp 시간복잡도 분석
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-03-06T00:00:00+09:00">March 6, 2025</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          3 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Tree DP를 DFS를 이용해 구현할 때, 실제 시간복잡도는 코드를 보고 대충 생각한 것보다 작은 경우가 많다. 이 글에서는 그런 몇몇 케이스를 다룬다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/cs-blog/others/Node.js-+-V8/" rel="permalink">Node.js + V8
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2024-10-06T00:00:00+09:00">October 6, 2024</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Node.js repo의 ./src 디렉토리에 가 보면, 시스템 콜 사용 같은 저레벨 작업이나 퍼포먼스 향상을 위해 C++로 작성된 코드가 보일 것이다. 그리고 이 코드들을 까 보면 v8 네임스페이스의 뭔가로 가득 차 있어 C++만 잘 한다고 코드를 이해하기가 쉽지 않다. 이 글에...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/cs-blog/others/Node.js-net.lookUpAndConnect-%EB%B2%84%EA%B7%B8-%EC%88%98%EC%A0%95/" rel="permalink">Node.js Net.lookupandconnect 버그 수정
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2024-07-29T00:00:00+09:00">July 29, 2024</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">일단 저번에 가상환경 밖에서 돌렸을 때 에러가 떴던 테스트의 에러 메세지부터 살펴보자.
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+  </div>
+
+  
+  <div class="search-content">
+    <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+  </div>
+  
+
+  <div id="footer" class="page__footer">
+    <footer>
+      <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+      <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/sendoru" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/cs-blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 sendol. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+    </footer>
+  </div>
+
+  
+  <script src="/cs-blog/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/cs-blog/assets/js/lunr/lunr.min.js"></script>
+<script src="/cs-blog/assets/js/lunr/lunr-store.js"></script>
+<script src="/cs-blog/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'sendoru/cs-blog');
+    script.setAttribute('issue-term', 'pathname');
+    
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+  
+    <script src="/cs-blog/assets/js/custom/dark-theme.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+  
+    <script src="/cs-blog/assets/js/clipboardrouge.js"></script>
+  
+
+
+
+</body>
+
+</html>

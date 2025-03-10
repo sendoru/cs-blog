@@ -1,4 +1,206 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/cs-blog/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/cs-blog/" rel="alternate" type="text/html" /><updated>2025-03-07T01:29:08+09:00</updated><id>http://localhost:4000/cs-blog/feed.xml</id><title type="html">sendol’s CS &amp;amp; Dev. Blog</title><subtitle>sendol&apos;s CS &amp; Dev. Blog</subtitle><author><name>sendol</name><email>sendol39@gmail.com</email></author><entry><title type="html">Jekyll Github 블로그에 Latex 수식 사용</title><link href="http://localhost:4000/cs-blog/others/Jekyll-Github-%EB%B8%94%EB%A1%9C%EA%B7%B8%EC%97%90-LaTeX-%EC%88%98%EC%8B%9D-%EC%82%AC%EC%9A%A9/" rel="alternate" type="text/html" title="Jekyll Github 블로그에 Latex 수식 사용" /><published>2025-03-07T00:00:00+09:00</published><updated>2025-03-07T00:00:00+09:00</updated><id>http://localhost:4000/cs-blog/others/Jekyll-Github-%EB%B8%94%EB%A1%9C%EA%B7%B8%EC%97%90-LaTeX-%EC%88%98%EC%8B%9D-%EC%82%AC%EC%9A%A9</id><content type="html" xml:base="http://localhost:4000/cs-blog/others/Jekyll-Github-%EB%B8%94%EB%A1%9C%EA%B7%B8%EC%97%90-LaTeX-%EC%88%98%EC%8B%9D-%EC%82%AC%EC%9A%A9/"><![CDATA[<p>이 글에서는 <a href="https://github.com/mathjax/MathJax">Mathjax</a>를 이용해 Jekyll 블로그에 LaTex 문법을 이용한 수식을 넣는 법을 알아본다.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/cs-blog/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/cs-blog/" rel="alternate" type="text/html" /><updated>2025-03-10T20:50:16+09:00</updated><id>http://localhost:4000/cs-blog/feed.xml</id><title type="html">sendol’s CS &amp;amp; Dev. Blog</title><subtitle>sendol&apos;s CS &amp; Dev. Blog</subtitle><author><name>sendol</name><email>sendol39@gmail.com</email></author><entry><title type="html">벡터로 두 선분의 교점 구하기</title><link href="http://localhost:4000/cs-blog/algorithm/%EB%B2%A1%ED%84%B0%EB%A1%9C-%EB%91%90-%EC%84%A0%EB%B6%84%EC%9D%98-%EA%B5%90%EC%A0%90-%EA%B5%AC%ED%95%98%EA%B8%B0/" rel="alternate" type="text/html" title="벡터로 두 선분의 교점 구하기" /><published>2025-03-10T00:00:00+09:00</published><updated>2025-03-10T00:00:00+09:00</updated><id>http://localhost:4000/cs-blog/algorithm/%EB%B2%A1%ED%84%B0%EB%A1%9C-%EB%91%90-%EC%84%A0%EB%B6%84%EC%9D%98-%EA%B5%90%EC%A0%90-%EA%B5%AC%ED%95%98%EA%B8%B0</id><content type="html" xml:base="http://localhost:4000/cs-blog/algorithm/%EB%B2%A1%ED%84%B0%EB%A1%9C-%EB%91%90-%EC%84%A0%EB%B6%84%EC%9D%98-%EA%B5%90%EC%A0%90-%EA%B5%AC%ED%95%98%EA%B8%B0/"><![CDATA[<p>애드혹과 케이스 워크 노가다를 통한 선분 교차 판정은 좀 더럽다. 벡터를 사용해서 케이스를 좀 더 깔끔하게 분류해 선분의 교점을 구해보자.</p>
+
+<ul>
+  <li>이 글에서는 편의상 원점과 점 $A$를 잇는 벡터 $\overrightarrow{OA}$를 $\overrightarrow{A}$로 표현한다.</li>
+</ul>
+
+<h2 id="요약">요약</h2>
+
+<p>원리는 필요 없고 알고리즘만 갖다 쓸 거라면 이걸 그대로 구현하면 된다. 맨 아래에 실제로 작동하는 코드도 있다.</p>
+
+<ul>
+  <li>입력 - 두 선분 $\overline{P_0 P_1}$과 $\overline{Q_0 Q_1}$</li>
+  <li>출력 - 두 선분의 교점이 있으면 그 교점을, 두 선분이 한 선분으로 겹치면 그 선분을 반환하며, 두 선분이 만나지 않으면 만나지 않는다고 판단한다.</li>
+</ul>
+
+<ol>
+  <li>$u \leftarrow (\overrightarrow{P_0 P_1} \times \overrightarrow{Q_0 Q_1})$</li>
+  <li>$u \ne 0$이라면,
+    <ol>
+      <li>$s \leftarrow (\overrightarrow{P_0 Q_0} \times \overrightarrow{Q_0 Q_1}) / u \qquad t \leftarrow (\overrightarrow{P_0 Q_0} \times \overrightarrow{P_0 P_1}) / u$</li>
+      <li>$0 \le s \le 1$이고 $0 \le t \le 1$이면 두 선분은 $\overrightarrow{OP_0} + s\overrightarrow{P_0P_1}$에서 교차한다. 그렇지 않으면 교점이 없다.</li>
+    </ol>
+  </li>
+  <li>그렇지 않다면,
+    <ol>
+      <li>$\overrightarrow{P_0 Q_0} \times \overrightarrow{Q_0 Q_1} = 0$, $\overrightarrow{P_0 Q_0} \times \overrightarrow{P_0 P_1} = 0$ 중 하나라도 거짓이면 교점이 없다.</li>
+      <li>$A_0, \ A_1 \leftarrow \min(P_0, \ P_1), \ \max(P_0, \ P_1) \ B_0, \ B_1 \leftarrow \min(Q_0, \ Q_1), \ \max(Q_0, \ Q_1)$</li>
+      <li>$L \leftarrow \max(A_0, \ B_0) \ R \leftarrow \min(A_1, \ B_1)$</li>
+      <li>$L &lt; R$이면 선분 $LR$에서 겹치고, $L = R$이면 $L$이 교점이고, $L &gt; R$이면 교점이 없다. 이 대소비교는 좌표를 튜플로 두고 통째로 비교하는 것이다.</li>
+    </ol>
+  </li>
+</ol>
+
+<h2 id="배경-지식">배경 지식</h2>
+
+<p>혹시 벡터에 대해 잘 모르는 상황이라면 <a href="https://zigui.tistory.com/34">이 글</a>을 읽고 오는 것을 추천한다. 고등학교 기하 수준의 배경 지식이 있다면 굳이 안 봐도 되긴 하는데, 선분 교차 판정뿐만 아니라 계산 기하 분야에서 자주 등장하는 알고리즘을 종합적으로 설명하고 있어서 한 번 보면 좋다.</p>
+
+<p>두 벡터를 곱하는 방법 중 하나로 외적(cross product)가 있다. 두 평면벡터의 외적은 그냥 수 하나가 나오고, 다음과 같이 정의된다.</p>
+
+\[(a_x, a_y) \times (b_x, b_y) = a_x b_y - a_y b_x\]
+
+<p>외적의 성질은 다음과 같다.</p>
+
+<ul>
+  <li>벡터의 덧셈에 대해 결합법칙과 분배법칙을 만족한다.</li>
+  <li>외적하는 두 벡터를 교환하면 부호가 반대가 된다. $(\vec{a} \times \vec{b} = - \vec{b} \times \vec{a})$</li>
+  <li>평행한 두 벡터를 외적하면 $0$이 된다.
+    <ul>
+      <li>두 벡터의 외적이 $0$이 아니면 두 벡터는 평행하지 않다.</li>
+      <li>같은 벡터를 외적하면 $0$이 된다. $(\vec{a} \times \vec{a} = 0)$.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>한편, 두 점 $A$와 $B$를 양 끝점으로 하는 선분 위의 임의의 점 $X$는 다음과 같이 표현할 수 있다.</p>
+
+\[\overrightarrow{X} = \overrightarrow{A} + s\overrightarrow{AB} \quad (0 \le s \le 1)\]
+
+<p>풀어서 설명하면, 원점에서 점 $X$까지 가려면 일단 점 $A$까지 간 다음, 선분 $\overline{AB}$을 따라 이동하면 된다는 것이다. 선분은 점의 집합이기 때문에, 다르게 말하면 저 식이 선분 자체를 벡터로 표현한 것이라고 볼 수도 있다.</p>
+
+<h2 id="알고리즘-구성">알고리즘 구성</h2>
+
+<p>위 그림과 같이 두 선분 $\overline{P_0 P_1}$과 $\overline{Q_0 Q_1}$이 주어졌을 때 그 교점 $R$이 존재하는지, 존재한다면 어떤 점인지 구할 방법을 생각해보자. 이는 벡터 $\overrightarrow{R}$이 만족하는 방정식을 써서, 그 식을 만족하는 변수가 존재하는지 확인하고 존재한다면 그 값을 구하는 것으로 수행할 수 있다.</p>
+
+<p>[여기에 그림 입력]</p>
+
+<p>교점 $R$이 존재한다면 다음 두 식을 동시에 만족시키는 실수 $s$와 $t$가 존재한다.</p>
+
+\[\begin{aligned}
+\overrightarrow{P_0 R} &amp;= s \overrightarrow{P_0 P_1} &amp;\quad (0 \le s \le 1) \\
+\overrightarrow{P_0 R} &amp;= \overrightarrow{P_0 Q_0} + t \overrightarrow{Q_0 Q_1} &amp;\quad (0 \le t \le 1) \\
+\end{aligned}\]
+
+<p>식을 정리하면 다음과 같다.</p>
+
+\[s \overrightarrow{P_0 P_1} = \overrightarrow{P_0 Q_0} + t \overrightarrow{Q_0 Q_1} \quad (0 \le s, \; t \le 1)\]
+
+<p>여기서 외적의 결합법칙과 같은 벡터를 외적하면 0이 된다는 사실을 이용하면 $s$와 $t$ 중 하나의 변수를 없앨 수 있다. 양변에 $\overrightarrow{Q_0 Q_1}$을 외적하면 $t$가 없어지고 다음 식이 나온다.</p>
+
+\[s (\overrightarrow{P_0 P_1} \times \overrightarrow{Q_0 Q_1})
+= (\overrightarrow{P_0 Q_0} \times \overrightarrow{Q_0 Q_1})\]
+
+<p>$\overrightarrow{Q_0 Q_1}$ 대신 $\overrightarrow{P_0 P_1}$을 외적하면 $t$만에 대한 식도 얻을 수 있다.</p>
+
+\[0
+= (\overrightarrow{P_0 Q_0} \times \overrightarrow{P_0 P_1})
++ t (\overrightarrow{Q_0 Q_1} \times \overrightarrow{P_0 P_1})\]
+
+\[-t (\overrightarrow{Q_0 Q_1} \times \overrightarrow{P_0 P_1})
+= t (\overrightarrow{P_0 P_1} \times \overrightarrow{Q_0 Q_1})
+= (\overrightarrow{P_0 Q_0} \times \overrightarrow{P_0 P_1})\]
+
+<p>만약 $\overrightarrow{P_0 P_1} \times \overrightarrow{Q_0 Q_1} \neq 0$이라면 $s$와 $t$를 바로 구할 수 있다. 여기서부터 $\overrightarrow{P_0 P_1} \times \overrightarrow{Q_0 Q_1} \neq 0$인 경우, $\overrightarrow{P_0 P_1} \times \overrightarrow{Q_0 Q_1} = 0$인 경우로 케이스를 나눠서 풀어보자.</p>
+
+<h3 id="overrightarrowp_0-p_1-times-overrightarrowq_0-q_1-neq-0인-경우">$\overrightarrow{P_0 P_1} \times \overrightarrow{Q_0 Q_1} \neq 0$인 경우</h3>
+
+<p>$\overrightarrow{P_0 P_1} \times \overrightarrow{Q_0 Q_1} \neq 0$인 경우는 두 선분 $\overline{P_0 P_1}$과 $\overline{Q_0 Q_1}$이 둘 다 길이가 $0$이 아니고 평행하지 않은 경우다. 이 경우엔 앞서 나온 식으로 $s$와 $t$를 바로 계산할 수 있습니다.</p>
+
+\[s = \frac{
+  \overrightarrow{P_0 Q_0} \times \overrightarrow{Q_0 Q_1}
+} {
+    \overrightarrow{P_0 P_1} \times \overrightarrow{Q_0 Q_1}
+} \qquad
+
+t = \frac{
+  \overrightarrow{P_0 Q_0} \times \overrightarrow{P_0 P_1}
+} {
+  \overrightarrow{P_0 P_1} \times \overrightarrow{Q_0 Q_1}
+}\]
+
+<p>$0 \leq s, \; t \leq 1$이면 교점이 존재하는 것이고, 그렇지 않으면 교점이 없다. 교점의 좌표 $R$은 $\overrightarrow{R} = \overrightarrow{P_0} + s\overrightarrow{P_0 P_1}$로 구할 수 있다.</p>
+
+<h3 id="그-외의-경우">그 외의 경우</h3>
+
+<p>$\overrightarrow{P_0 P_1} \times \overrightarrow{Q_0 Q_1} = 0$인 경우는 두 선분이 평행하거나 길이가 $0$인 경우다. 이 경우엔 두 선분이 겹치는지, 겹치지 않는지를 판단해야 한다.</p>
+
+<p>일단, 네 점이 모두 한 직선 위에 있는지 판단해야 한다. 이는 네 점 $P_0$, $P_1$, $Q_0$, $Q_1$중 세 점을 고르는 모든 경우에 대해 외적이 $0$인지 보면 된다. 즉,</p>
+
+\[\begin{aligned}
+\overrightarrow{P_0 P_1} \times \overrightarrow{P_1 Q_0} &amp;= 0 \\
+\overrightarrow{P_0 P_1} \times \overrightarrow{P_1 Q_1} &amp;= 0 \\
+\overrightarrow{Q_0 Q_1} \times \overrightarrow{Q_1 P_0} &amp;= 0 \\
+\overrightarrow{Q_0 Q_1} \times \overrightarrow{Q_1 P_1} &amp;= 0 \\
+\end{aligned}\]
+
+<p>이 네 등식이 모두 성립하는 지 보면 된다.</p>
+
+<p>위 네 식 중 하나라도 성립하지 않으면 네 점이 한 직선 위에 있지 않은 것인데, 두 선분이 평행하지 않은 경우는 앞에서 이미 걸렀으므로 이때는 반드시 두 선분이 평행하고 만나지 않는 경우다. 따라서 이 때는 교점이 존재하지 않는다.</p>
+
+<p>마지막으로 네 점이 한 직선 위에 있는 경우만 남았다.</p>
+
+<p>[여기에 그림 입력]</p>
+
+<p>$A_0 = \min(P_0, P_1)$, $A_1 = \max(P_0, P_1)$, $B_0 = \min(Q_0, Q_1)$, $B_1 = \max(Q_0, Q_1)$로 두자.. 이때 점의 비교 기준은 우선 $x$좌표가 작은 것이 더 작은 점이고, $x$좌표가 같다면 $y$좌표가 작은 것이 더 작은 점이다. 이렇게 하면 $\overrightarrow{A_0 A_1}$과 $\overrightarrow{B_0 B_1}$의 방향이 같아진다.</p>
+
+<p>[여기에 그림 입력]</p>
+
+<p>그런 다음, $L = \max(A_0, B_0)$, $R = \min(A_1, B_1)$이라고 하자. $L \leq R$이면 두 선분이 겹치는 것이고, $L = R$이면 교점이 $L$이고, $L &gt; R$이면 교점이 없다.</p>
+
+<h2 id="오버플로-주의">오버플로 주의</h2>
+
+<p>내부 계산을 정수형 또는 분수로만 진행한다면 오버플로가 좀 많이 날 수 있다. 점의 좌표 범위가 $10^9$ 이내라면, $s$와 $t$의 분자는 최대 $10^{18}$, 교점의 좌표는 여기에 벡터를 다시 곱하므로 분자가 최대 $10^{27}$까지 늘어난다. 최종 답안이 정확한 분수 형태일 필요가 없다면 적당한 타이밍에 부동소수점으로 바꿔주자. 최종 답안도 분수 형태로 만들고 싶다면 입력값으로 주어지는 좌표의 세제곱까지 처리할 수 있어야 한다. 예를 들어, 입력값의 범위가 <code class="language-plaintext highlighter-rouge">i32</code>라면 마지막에는 <code class="language-plaintext highlighter-rouge">i128</code>로 계산해야 한다.</p>
+
+<p>이런 게 귀찮으면 파이썬 등 BigInt를 지원하는 언어를 쓰자.</p>
+
+<h2 id="구현">구현</h2>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">ll</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="kt">long</span> <span class="kt">double</span> <span class="n">ld</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">pair</span><span class="o">&lt;</span><span class="n">ll</span><span class="p">,</span> <span class="n">ll</span><span class="o">&gt;</span> <span class="n">pll</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">pair</span><span class="o">&lt;</span><span class="n">ld</span><span class="p">,</span> <span class="n">ld</span><span class="o">&gt;</span> <span class="n">pld</span><span class="p">;</span> 
+
+<span class="n">ll</span> <span class="nf">cross</span><span class="p">(</span><span class="n">pll</span> <span class="n">a</span><span class="p">,</span> <span class="n">pll</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">a</span><span class="p">.</span><span class="n">first</span> <span class="o">*</span> <span class="n">b</span><span class="p">.</span><span class="n">second</span> <span class="o">-</span> <span class="n">a</span><span class="p">.</span><span class="n">second</span> <span class="o">*</span> <span class="n">b</span><span class="p">.</span><span class="n">first</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">pll</span> <span class="n">sub</span><span class="p">(</span><span class="n">pll</span> <span class="n">a</span><span class="p">,</span> <span class="n">pll</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span><span class="n">a</span><span class="p">.</span><span class="n">first</span> <span class="o">-</span> <span class="n">b</span><span class="p">.</span><span class="n">first</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">second</span> <span class="o">-</span> <span class="n">b</span><span class="p">.</span><span class="n">second</span><span class="p">};</span>
+<span class="p">}</span>
+
+<span class="c1">// {0, {0, 0}}: no intersection</span>
+<span class="c1">// {1, {x, y}}: intersection at (x, y)</span>
+<span class="c1">// {2, {0, 0}}: two segments are overlapped (infinite intersections)</span>
+<span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">pld</span><span class="o">&gt;</span> <span class="n">intersect</span><span class="p">(</span><span class="n">pll</span> <span class="n">p0</span><span class="p">,</span> <span class="n">pll</span> <span class="n">p1</span><span class="p">,</span> <span class="n">pll</span> <span class="n">q0</span><span class="p">,</span> <span class="n">pll</span> <span class="n">q1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">pll</span> <span class="n">u</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p0</span><span class="p">);</span>
+    <span class="n">pll</span> <span class="n">v</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="n">q1</span><span class="p">,</span> <span class="n">q0</span><span class="p">);</span>
+    <span class="n">ll</span> <span class="n">det</span> <span class="o">=</span> <span class="n">cross</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">det</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">p0</span><span class="p">.</span><span class="n">swap</span><span class="p">(</span><span class="n">p1</span><span class="p">);</span>
+        <span class="n">u</span><span class="p">.</span><span class="n">first</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="n">u</span><span class="p">.</span><span class="n">second</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="n">det</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">det</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">pll</span> <span class="n">w</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">p0</span><span class="p">);</span>
+        <span class="n">ll</span> <span class="n">cross_wu</span> <span class="o">=</span> <span class="n">cross</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">u</span><span class="p">);</span>
+        <span class="n">ll</span> <span class="n">cross_wv</span> <span class="o">=</span> <span class="n">cross</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">cross_wu</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">cross_wu</span> <span class="o">&gt;</span> <span class="n">det</span> <span class="o">||</span> <span class="n">cross_wv</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">cross_wv</span> <span class="o">&gt;</span> <span class="n">det</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">}};</span>
+        <span class="p">}</span>
+        <span class="n">ld</span> <span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="n">ld</span><span class="p">)</span><span class="n">cross_wv</span> <span class="o">/</span> <span class="n">det</span><span class="p">;</span>
+        <span class="n">ld</span> <span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">ld</span><span class="p">)</span><span class="n">cross_wu</span> <span class="o">/</span> <span class="n">det</span><span class="p">;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="p">{</span><span class="n">p0</span><span class="p">.</span><span class="n">first</span> <span class="o">+</span> <span class="n">u</span><span class="p">.</span><span class="n">first</span> <span class="o">*</span> <span class="n">s</span><span class="p">,</span> <span class="n">p0</span><span class="p">.</span><span class="n">second</span> <span class="o">+</span> <span class="n">u</span><span class="p">.</span><span class="n">second</span> <span class="o">*</span> <span class="n">s</span><span class="p">}};</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">cross</span><span class="p">(</span><span class="n">sub</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">p0</span><span class="p">),</span> <span class="n">u</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">cross</span><span class="p">(</span><span class="n">sub</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">p1</span><span class="p">),</span> <span class="n">u</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">cross</span><span class="p">(</span><span class="n">sub</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">q0</span><span class="p">),</span> <span class="n">v</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">cross</span><span class="p">(</span><span class="n">sub</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">q1</span><span class="p">),</span> <span class="n">v</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">}};</span>
+        <span class="p">}</span>
+        <span class="n">pll</span> <span class="n">a0</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">);</span>
+        <span class="n">pll</span> <span class="n">a1</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">);</span>
+        <span class="n">pll</span> <span class="n">b0</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">q1</span><span class="p">);</span>
+        <span class="n">pll</span> <span class="n">b1</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">q1</span><span class="p">);</span>
+        <span class="n">pll</span> <span class="n">l</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">a0</span><span class="p">,</span> <span class="n">b0</span><span class="p">);</span>
+        <span class="n">pll</span> <span class="n">r</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">b1</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">}};</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">==</span> <span class="n">r</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="p">{(</span><span class="n">ld</span><span class="p">)</span><span class="n">l</span><span class="p">.</span><span class="n">first</span><span class="p">,</span> <span class="p">(</span><span class="n">ld</span><span class="p">)</span><span class="n">l</span><span class="p">.</span><span class="n">second</span><span class="p">}};</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">}};</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>]]></content><author><name>sendol</name><email>sendol39@gmail.com</email></author><category term="Algorithm" /><category term="Algorithm-Normal" /><category term="Geometry" /><summary type="html"><![CDATA[애드혹과 케이스 워크 노가다를 통한 선분 교차 판정은 좀 더럽다. 벡터를 사용해서 케이스를 좀 더 깔끔하게 분류해 선분의 교점을 구해보자.]]></summary></entry><entry><title type="html">Jekyll Github 블로그에 Latex 수식 사용</title><link href="http://localhost:4000/cs-blog/others/Jekyll-Github-%EB%B8%94%EB%A1%9C%EA%B7%B8%EC%97%90-LaTeX-%EC%88%98%EC%8B%9D-%EC%82%AC%EC%9A%A9/" rel="alternate" type="text/html" title="Jekyll Github 블로그에 Latex 수식 사용" /><published>2025-03-07T00:00:00+09:00</published><updated>2025-03-07T00:00:00+09:00</updated><id>http://localhost:4000/cs-blog/others/Jekyll-Github-%EB%B8%94%EB%A1%9C%EA%B7%B8%EC%97%90-LaTeX-%EC%88%98%EC%8B%9D-%EC%82%AC%EC%9A%A9</id><content type="html" xml:base="http://localhost:4000/cs-blog/others/Jekyll-Github-%EB%B8%94%EB%A1%9C%EA%B7%B8%EC%97%90-LaTeX-%EC%88%98%EC%8B%9D-%EC%82%AC%EC%9A%A9/"><![CDATA[<p>이 글에서는 <a href="https://github.com/mathjax/MathJax">Mathjax</a>를 이용해 Jekyll 블로그에 LaTex 문법을 이용한 수식을 넣는 법을 알아본다.</p>
 
 <h2 id="마크다운-엔진-변경">마크다운 엔진 변경</h2>
 
@@ -1003,149 +1205,4 @@ sys	3m12.673s
     <code>
         <!DOCTYPE html>
     </code>
-</body>]]></content><author><name>sendol</name><email>sendol39@gmail.com</email></author><category term="Others" /><category term="html" /><category term="css" /><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">Writing The First Post</title><link href="http://localhost:4000/cs-blog/others/writing-the-first-post/" rel="alternate" type="text/html" title="Writing The First Post" /><published>2023-10-19T00:00:00+09:00</published><updated>2023-10-19T00:00:00+09:00</updated><id>http://localhost:4000/cs-blog/others/writing-the-first-post</id><content type="html" xml:base="http://localhost:4000/cs-blog/others/writing-the-first-post/"><![CDATA[<head>
-    <script type="text/x-mathjax-config">
-
-    MathJax.Hub.Config({
-
-    tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
-
-    });
-
-    </script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML" async=""></script>
-</head>
-
-<p>Hello, world!는 언제나 국룰이다.</p>
-
-<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// cpp</span>
-<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Hello, world!"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># python
-</span><span class="k">print</span><span class="p">(</span><span class="s">"Hello, world!"</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Rust</span>
-<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">io</span><span class="p">;</span>
-<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nd">println!</span><span class="p">(</span><span class="s">"Hello, world!"</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Hello, world!</span><span class="dl">"</span><span class="p">)</span>
-</code></pre></div></div>
-
-<h2 id="to-do-list">To-Do List</h2>
-
-<ol>
-    <li> ✅ 블로그에 글 하나 올리기 </li>
-    <li> ✅ 블로그 메인 화면 및 사이드바 등에 개인정보 채워두기 (닉네임, 깃헙 링크 등등) </li>
-    <li> ⬜ 제대로 된 자기소개 페이지 하나 만들기 <del>&lt;- 쓸 거 없어서 못 만드는 중</del> ㄱ</li>
-    <li> ✅ 블로그 맨 위에 메뉴 바 만들기 </li>
-    <li> ✅ 블로그 포스트 검색 기능 만들기 </li>
-    <li> <del>✅</del> 폰트 및 레이아웃 조절하기. 아직 할 게 좀 남았는데 글 하나 더 써서 기록해둬야겠다.</li>
-    <li> ✅ 태그 및 기능 추가하기 </li>
-    <li> ❔ 블로그 포스트 연도별 / 카테고리 별 뷰 만들기 &lt;- 반 정도 함 </li>
-    <li> <del>⬜ 블로그에 HTML로 포스트 올리기</del> 생각보다 구리다. 그냥 MD에 임베드해서 쓰자. </li>
-    <li> <del>⬜ Javascript 관련 기능 어떻게 쓰는지 알아보기</del> 나중에 할래</li>
-</ol>
-
-<h2 id="tips--troubleshooting">Tips &amp; Troubleshooting</h2>
-
-<ol>
-  <li>
-    <p>Mardown 파일에 포스트 제목을 따로 쓸 필요는 없다. 굳이 쓰면 이렇게 제목이 두 번 표시된다.</p>
-
-    <figure style="text-align: center;">
-     <img src="/cs-blog/assets/images/writing-the-first-post/image_1.png" alt="Screenshot of blog post upper part wtih duplicated title" style="border: 5px solid #555; text-align: center" />
-     <figcaption> 이미지에 테두리 넣는 법도 배웠다? </figcaption>
- </figure>
-  </li>
-  <li>
-    <p>Markdown 스타일 List</p>
-
-    <p>Markdown에서 <code class="language-plaintext highlighter-rouge">1. ... &lt;br&gt; 2. ... &lt;br&gt; ...</code>같은 형태로 글을 쓰면 저절로 ordered list가 된다. ordered list 안의 (plain text를 포함한) 컴포넌트를 작성할 때 들여쓰기를 안 해주면 컴포넌트가 리스트 밖으로 빠져나온다던가 리스트 번호가 1부터 다시 시작한다던가 하는 안 좋은 일이 일어난다. HTML의 <code class="language-plaintext highlighter-rouge">&lt;ol&gt;</code> + <code class="language-plaintext highlighter-rouge">&lt;li&gt;</code> 등의 태그에서는 스코프가 명확히 정해져 있어서 이런 걸 쓰면 크게 신경 쓸 필요는 없는 일이긴 하다.</p>
-
-    <figure style="text-align: center;">
-     <img src="/cs-blog/assets/images/writing-the-first-post/image_2.png" alt="" style="border: 5px solid #555; text-align: center" />
-
-     <figcaption> 대충 이렇게 된다. </figcaption>
- </figure>
-  </li>
-  <li>
-    <p>LaTeX 수식</p>
-
-    <p>LaTeX로 수식을 써보자.</p>
-
-\[e^{i \theta} = \cos \theta + i \sin \theta\]
-
-    <p>그냥은 안 된다. 다음 코드를 HTML의 <code class="language-plaintext highlighter-rouge">&lt;head&gt;</code>에 추가하면 된다.</p>
-    <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nt">&lt;head&gt;</span>
-     <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/x-mathjax-config"</span><span class="nt">&gt;</span>
-
-     <span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Config</span><span class="p">({</span>
-
-     <span class="na">tex2jax</span><span class="p">:</span> <span class="p">{</span><span class="na">inlineMath</span><span class="p">:</span> <span class="p">[[</span><span class="dl">'</span><span class="s1">$</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">$</span><span class="dl">'</span><span class="p">],</span> <span class="p">[</span><span class="dl">'</span><span class="se">\\</span><span class="s1">(</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="se">\\</span><span class="s1">)</span><span class="dl">'</span><span class="p">]]}</span>
-
-     <span class="p">});</span>
-
-     <span class="nt">&lt;/script&gt;</span>
-
-     <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML'</span> <span class="na">async</span><span class="nt">&gt;&lt;/script&gt;</span>
- <span class="nt">&lt;/head&gt;</span>
-</code></pre></div>    </div>
-    <p>Markdown으로 작성 중인 경우에는 <code class="language-plaintext highlighter-rouge">&lt;head&gt; &lt;/head&gt;</code> 문서 맨 위에 새로 만들어주고 그 안에 저걸 끼워넣으면 된다. 그런데 markdown에서 이렇게 하면 VSCode의 Markdown Preview 확장 프로그램이 맛이 가기 때문에 작성 내용이 어떻게 표시되는지 보고 싶다면 웹 브라우저에서 확인해야 한다.</p>
-  </li>
-  <li>
-    <p>레이아웃 변경</p>
-
-    <p>지금 레이아웃에서 마음에 안 드는 게 몇 가지 있다.</p>
-    <figure style="width: 80%; margin: auto;">
-     <img src="/cs-blog/assets/images/writing-the-first-post/image_3.png" alt="" style="text-align: center" />
- </figure>
-
-    <p>일반적인 PC 환경인 가로로 길쭉한 화면 상태에서, 글씨가 쓸데없이 커져서 한 화면에 표시되는 정보량이 너무 적어진다. 화면의 가로 길이가 너무 짧다는 생각도 드는데 이것도 폰트 영향일 수도 있어서 폰트부터 고쳐 본 다음에 다시 확인해야 될 것 같다.</p>
-    <figure style="width: 80%; margin: auto;">
-     <img src="/cs-blog/assets/images/writing-the-first-post/image_4.png" alt="" />
-     <figcaption> 이 정도면 좋을텐데 </figcaption>
- </figure>
-
-    <p>반응형 UI의 폰트 크기 조절은 <code class="language-plaintext highlighter-rouge">_sass/minimal-mistakes/_reset.scss</code>에서 맨 위에 보이는 <code class="language-plaintext highlighter-rouge">html</code> 블럭 내의 값들을 바꿔 주면 된다. 가로 폭 조절은 <code class="language-plaintext highlighter-rouge">_sass/minimal-mistakes/_variables.scss</code>에서 <code class="language-plaintext highlighter-rouge">breakpoints</code>주석 아래에 있는 걸 고쳐주면 된다.</p>
-  </li>
-  <li>
-    <p>태그 및 카테고리 지정</p>
-
-    <p>Markdown 파일 맨 앞에 이렇게 생긴 걸 추가하면 된다.</p>
-    <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="s">---</span>
- <span class="s">title</span><span class="err">:</span> <span class="s2">"</span><span class="s">Writing</span><span class="nv"> </span><span class="s">The</span><span class="nv"> </span><span class="s">First</span><span class="nv"> </span><span class="s">Post"</span>
- <span class="na">categories</span><span class="pi">:</span>
-     <span class="pi">-</span> <span class="s">Others</span>
- <span class="na">tags</span><span class="pi">:</span>
-     <span class="pi">-</span> <span class="s">html</span>
-     <span class="pi">-</span> <span class="s">css</span>
-     <span class="pi">-</span> <span class="s">markup</span>
- <span class="s">---</span>
-</code></pre></div>    </div>
-
-    <p>카테고리를 추가하거나 변경하면 포스트 주소가 바뀐다. 카테고리를 지정하지 않았을 때 주소가 <a href="http://sendoru.github.io/cs-blog/writing-the-first-post">http://sendoru.github.io/cs-blog/writing-the-first-post/</a>였다면, 카테고리를 Others로 바꾼 후에는 <a href="http://sendoru.github.io/cs-blog/others/writing-the-first-post/">http://sendoru.github.io/cs-blog/others/writing-the-first-post/</a>가 된다.</p>
-
-    <p>위 문단에서 첫 번째 링크는 접속이 안 되어야 할 것 같은데 캐싱된 게 있는지 예전 페이지로 접속이 된다. 별 상관은 없을 듯</p>
-  </li>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">&lt;div&gt;</code> 또는 그 이외의 컨테이너 가운데 정렬</p>
-
-    <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nt">&lt;figure&gt;</span>
-     <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/cs-blog/assets/images/writing-the-first-post/image_4.png"</span> <span class="na">alt=</span><span class="s">""</span><span class="nt">&gt;</span>
-     <span class="nt">&lt;figcaption&gt;</span> 이 정도면 좋을텐데 <span class="nt">&lt;/figcaption&gt;</span>
- <span class="nt">&lt;/figure&gt;</span>
-</code></pre></div>    </div>
-
-    <p>이렇게 이미지를 넣을 때, 이미지 사이즈를 80%로 줄이고 가운데 정렬로 만드려면  <code class="language-plaintext highlighter-rouge">style="width: 80%; margin: auto;"</code> 스타일 속성을 <strong>figure</strong>에 넣어줘야 한다.</p>
-  </li>
-</ol>]]></content><author><name>sendol</name><email>sendol39@gmail.com</email></author><category term="Others" /><category term="html" /><category term="css" /><category term="markup" /><summary type="html"><![CDATA[]]></summary></entry></feed>
+</body>]]></content><author><name>sendol</name><email>sendol39@gmail.com</email></author><category term="Others" /><category term="html" /><category term="css" /><summary type="html"><![CDATA[]]></summary></entry></feed>
