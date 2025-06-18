@@ -1,5 +1,5 @@
 ---
-title: "Writing The First Post"
+title: Writing The First Post
 categories:
   - Others
 tags:

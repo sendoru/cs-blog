@@ -1,5 +1,5 @@
 ---
-Title: 2025-03-07-Jekyll-Github-블로그에-LaTeX-수식-사용
+title: Jekyll Github 블로그에 LaTeX 수식 사용
 categories:
   - Others
 tags:
@@ -75,7 +75,7 @@ LaTeX 문법을 사용할 포스트의 front-matter에 `use_math: true`를 적�
 
 ```yaml
 ---
-Title: 2025-03-07-Jekyll-Github-블로그에-LaTeX-수식-사용
+title: 2025-03-07-Jekyll-Github-블로그에-LaTeX-수식-사용
 categories:
   - Others
 tags:

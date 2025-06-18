@@ -1,5 +1,5 @@
 ---
-title: "PostgreSQL-Basics"
+title: PostgreSQL Basics
 categories:
     - Others
 tags:
