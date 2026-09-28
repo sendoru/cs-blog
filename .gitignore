@@ -30,6 +30,3 @@ yarn.lock
 .idea
 *.iml
 
-# Legacy Jekyll build artifacts kept during migration
-.jekyll-cache
-_site
